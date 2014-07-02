@@ -1,0 +1,127 @@
+group STTrans;
+
+code(id,env,data,pro) 			::= "<id> <\n><env> <\n><data> <\n> <pro>" 
+idDivision(pid,auth) 	::= " // Program-ID  <pid>     Author  <auth> ."
+envDivision(src,obj) 	::= " // SOURCE COMPUTER   <src>    OBJECT COMPUTER  <obj> ."
+onlyid(v)					::= " <v> "
+
+dataDivision(vari)		::= <<
+<vari ; separator=" \n "> 
+>>
+proDivision(sec)		::= <<
+<sec ; separator=" \n "> 
+>>
+identi(id)				::= " <id> "
+section(id,sta)				::= <<
+#beginsection<\n>
+public static void <id>()
+{
+<sta ; separator=" \n "> 
+}<\n>
+#endsection
+>>
+
+hyp()					::= "_"
+stat(id)     			::= " #beginstatement <\n><id>;<\n> #endstatement  "
+
+performStmt(id)		::= " <id>()  " 
+acceptStmt(id)		::= " <id>() " 
+initializeStmt(id)	::= <<
+<id ; separator=" "> 
+>>
+
+displayStmt(lit)	::=	 <<
+System.out.println( <lit; separator=" + "> ) 
+>>
+moveStmt(from,to) 	::= <<
+<to ; separator=" ">  <from>
+>>
+
+data1(id)  			::=  " <id> { "
+empStr(id)			::=  "#var String <id> = null ; "
+str(id,val)			::=	 "#var String <id> = <val> ; "
+empdouble(id)		::=	 "#var double <id> = null;"
+double(id,val)		::=  "#var double <id> = <val> ; "
+arrbrackets(index)  ::=  " [<index>] "
+closebracket() 		::=  "}" 
+redef(id1,id2)	::=  "<id1> = <id2> ; "	
+
+gotoStmt(id)			::=	"<id>();"
+var(id)			::=	"<id>"
+rule(at)		::= "<at>"
+lit(id)			::=	"<id>"
+exp(exp)			::=	"<exp>"
+comp(id)			::=	"<id>"
+sym(id)			::=	"<id>"
+bracketexp(exp)			::=	"<exp>"
+notexp(exp)			::=	"<exp>"
+boolexp(exp1,comp,exp2) ::= "<exp1> <comp> <exp2>"
+
+andexp(exps)	::=	<<
+( <exps; separator=" && "> )
+>>
+
+orexp(exps)	::=	<<
+( <exps; separator=" || "> )
+>>
+
+
+multStmt(left,right,another)	::=	"<another> = <left> * <right> ;"
+addStmt(left,right)	::=	"<right> += <left> ;"
+subStmt(left,right)	::=	"<right> -= <left> ;"
+
+parseint(str) 		::= " ParseInt( <str> ) " 
+sqlStmt(qr)  		::= <<
+#BEGINSQL
+<qr ; separator=" \n ">
+#ENDSQL <\n>
+>>
+
+hostvar(id) 				::="#beginidentifier<\n><id><\n>#endidentifier"
+
+
+performexitStmt(id)			::= " <id> "
+
+
+performUntilStmt(id,stm)	::=	 <<
+while ( ! ( <id> ) )
+{ 
+	<stm; separator=" \n "> ) ;
+}
+>>
+
+performVaryingStmt(id,cond,dig1,dig2,stm)	::=	 <<
+id = dig1 ;
+while ( ! ( <cond> ) )
+{ 
+	<stm; separator=" \n ">  ;
+	id += dig2;
+}
+>>
+
+ifexp(cond,stm,elif,elsess) ::= <<
+if <cond> 
+{
+	<stm; separator="\n "> 
+}
+	<elif; separator="\n ">
+	<elsess; separator="\n "> 
+>>
+
+elseifexp(cond,stm) ::= <<
+else if <cond> 
+{ 
+	<stm; separator=" \n "> 
+}
+>>
+
+elseexp(stm) ::= <<
+else { <stm; separator=" \n "> }
+>>
+
+stamt(st) 		::= "<st>"
+
+sections(secs) ::= <<
+<secs; separator=" \n "> 
+>>
+

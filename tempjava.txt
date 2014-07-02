@@ -1,0 +1,2934 @@
+ // Program-ID  SRJLNK002     Author  WORKS . 
+ // SOURCE COMPUTER   YHP    OBJECT COMPUTER  YHP . 
+#var String SQL-PAR = null ;  
+ PRM-LIST {  
+ #var String DBNAME = null ;  
+ #var String FILL = "00" ;  
+ #var String MENU-ID = SPACE ;  
+ #var String PGMNAME = "srjlnk002" ;  
+ #var String JOB-ID = SPACE ;  
+ #var double PAR-ID = 0 ;  
+ #var double SYA-ID = 0 ;  
+ #var String LNK-DATE = SPACE ;  
+ #var double HR-NO = 0 ;  
+ #var double HRRK-KB = 0 ;  
+ #var double HR-NO-WK = 0 ;  
+ #var double HRRK-KB-WK = 0 ;  
+ #var double TRN-KB = 0 ;  
+ #var double LNK-DATE-KB = 0 ;  
+ #var String MERGE-SDATE = null ;  
+ #var String MERGE-EDATE = null ;  
+ #var String MERGED-EDATE = null ;  
+ #var double MERGE-STATUS = null; 
+ #var String LNK-EDATE = SPACE ;  
+ SUBCOM-SQL-AREA {  
+ #var String SUBCOM-SQL = SPACE ;  
+ #var double SUBCOM-SQL-SIZE = 150 ;  
+ #var double SUBCOM-SQL-FC = ZERO ;  
+ DATE-NOW-TXT {  
+ #var String NOW-YY = null ;  
+ #var String FILL = "/" ;  
+ #var String NOW-MM = null ;  
+ #var String FILL = "/" ;  
+ #var String NOW-DD = null ;  
+ #var String FILL = " " ;  
+ TIME-NOW-TXT {  
+ #var String NOW-HH = null ;  
+ #var String FILL = ":" ;  
+ #var String NOW-FF = null ;  
+ #var String FILL = ":" ;  
+ #var String NOW-SS = null ;  
+ #var String SRK-LNK-DATE = null ;  
+ #var String SRK-LNK-EDATE = null ;  
+ #var String WK-PRC-DATE = null ;  
+ #var String WK-FUTURE-DATE = null ;  
+ #var String WK-PAST-DATE = null ;  
+ SRJLNKCTRL-REC {  
+ #var double PAST-LNK-KB = null; 
+ #var double FUTURE-LNK-KB = null; 
+ #var double PAST-SUSPEND-DAYS = null; 
+ #var double FUTURE-SUSPEND-DAYS = null; 
+ #var double LNK-RESTORE = null; 
+ SRLNKTRN-REC {  
+ #var double SRT-SYA-ID = null; 
+ #var double SRT-SRTBL-NO = null; 
+ #var String SRT-SRFLD-ID = null ;  
+ #var String SRT-SRFLD-OVAL = null ;  
+ #var String SRT-SRFLD-NVAL = null ;  
+ #var String SRT-LNK-DATE = null ;  
+ #var double SRT-STATUS = null; 
+ #var double SRT-HR-NO = null; 
+ #var double SRT-HRRK-KB = null; 
+ #var double SRT-TRN-KB = null; 
+ #var double SRT-KNM-SEQ = null; 
+ #var double SRT-ENTRY-KB = null; 
+ #var double SRT-LNK-DATE-KB = null; 
+ #var double SRMST-MAX = 1000 ;  
+ #var double SRKNM-MAX = 30 ;  
+ #var double WK-STATUS = null; 
+ #var double TGT-STATUS = null; 
+ SRMST-REC {  
+ #var double CNT-SRMST = null; 
+ #var double SRM-SYA-ID = null; 
+ #var String SRM-SDATE = null ;  
+ #var String SRM-EDATE = null ;  
+ #var double SRM-HR-NO = null; 
+ #var double SRM-HRRK-KB = null; 
+ #var double SRM-STATUS = null; 
+ #var double SRM-TRG-KB = null; 
+ #var String SRM-SR-SYZ-CD = null ;  
+ #var String SRM-SYZ-PRC-DATE = null ;  
+ #var String SRM-SYZ-HAT-DATE = null ;  
+ #var String SRM-CHAKUNIN-DATE = null ;  
+ #var String SRM-KINMU-SYUBETU-CD = null ;  
+ #var String SRM-KS-PRC-DATE = null ;  
+ #var String SRM-KYUMU-SYUBETU-CD = null ;  
+ #var double SRM-JITAN-KINMU-KB = null; 
+ #var String SRM-JITAN-KINMU-CD = null ;  
+ #var String SRM-JITAN-SYUBETU-CD = null ;  
+ #var String SRM-SIME-CD = null ;  
+ #var String SRM-CAL-CD = null ;  
+ #var String SRM-KINMU-CAL-CD = null ;  
+ #var String SRM-HOLIDAY-TYPE-CD = null ;  
+ #var String SRM-HT-PRC-DATE = null ;  
+ #var double SRM-SAGYO-KEITAI-KB = null; 
+ #var String SRM-SAGYO-KEITAI-CD = null ;  
+ #var double SRM-PROJECT-KB = null; 
+ #var double SRM-KINMUNY-KB = null; 
+ #var String SRM-KINMUNY-CD = null ;  
+ #var double SRM-SYORI-KB = null; 
+ #var String SRM-SSYORIGRP-CD = null ;  
+ #var String SRM-KYUKA-KEITAI-CD = null ;  
+ #var String SRM-SUMSYA-KB = null ;  
+ #var String SRM-KINMU-PTN-CD1 = null ;  
+ #var String SRM-KINMU-PTN-CD2 = null ;  
+ #var String SRM-KINMU-PTN-CD3 = null ;  
+ #var String SRM-KINMU-PTN-CD4 = null ;  
+ #var String SRM-JIKAN-CHECK-CD1 = null ;  
+ #var String SRM-JIKAN-CHECK-CD2 = null ;  
+ #var String SRM-JIKAN-CHECK-CD3 = null ;  
+ #var String SRM-SR-SYZ-CD-BK = null ;  
+ #var double SRM-OUEN-FLG = null; 
+ #var double SRM-KANRI-KB = null; 
+ #var double SRM-ADMIN-KB = null; 
+ #var double SRM-CAL-KB = null; 
+ #var String SRM-NK-KINZ-KDT = null ;  
+ #var String SRM-NK-FUYO-KDT = null ;  
+ #var String SRM-RK-KINZ-KDT = null ;  
+ #var String SRM-RK-FUYO-KDT = null ;  
+ #var String SRM-IK-KINZ-KDT = null ;  
+ #var double SRM-SYUK-KB = null; 
+ #var double SRM-TAIS-KB = null; 
+ #var double SRM-KYUS-KB = null; 
+ #var String SRM-KAI-CD = null ;  
+ #var String SRM-SKAI-CD = null ;  
+ #var String SRM-GKAI-CD = null ;  
+ #var String SRM-GSYZ-CD = null ;  
+ #var String SRM-KYUSJ-CD = null ;  
+ #var String SRM-KK-SYORI-CD = null ;  
+ #var double SRM-KKOJ-MT = null; 
+ #var double SRM-KKOJ-DT = null; 
+ #var double SRM-IKKOJ-MT = null; 
+ #var double SRM-IKKOJ-DT = null; 
+ #var double SRM-KYUSTKKB = null; 
+ #var String SRM-RENKYUS-TDT = null ;  
+ #var String SRM-RENSYUK-TDT = null ;  
+ #var double SRM-SR-SYA-KB = null; 
+ #var double SRM-KUMI-KB = null; 
+ #var String SRM-GENERAL-CD1 = null ;  
+ #var String SRM-GENERAL-CD2 = null ;  
+ #var String SRM-GENERAL-CD3 = null ;  
+ #var String SRM-GENERAL-CD4 = null ;  
+ #var String SRM-GENERAL-CD5 = null ;  
+ #var String SRM-GENERAL-CD6 = null ;  
+ #var String SRM-GENERAL-CD7 = null ;  
+ #var String SRM-GENERAL-CD8 = null ;  
+ #var String SRM-GENERAL-CD9 = null ;  
+ #var String SRM-GENERAL-CD10 = null ;  
+ #var String SRM-GENERAL-CD11 = null ;  
+ #var String SRM-GENERAL-CD12 = null ;  
+ #var String SRM-GENERAL-CD13 = null ;  
+ #var String SRM-GENERAL-CD14 = null ;  
+ #var String SRM-GENERAL-CD15 = null ;  
+ #var String SRM-GENERAL-CD16 = null ;  
+ #var String SRM-GENERAL-CD17 = null ;  
+ #var String SRM-GENERAL-CD18 = null ;  
+ #var String SRM-GENERAL-CD19 = null ;  
+ #var String SRM-GENERAL-CD20 = null ;  
+ #var String SRM-GENERAL-CD21 = null ;  
+ #var String SRM-GENERAL-CD22 = null ;  
+ #var String SRM-GENERAL-CD23 = null ;  
+ #var String SRM-GENERAL-CD24 = null ;  
+ #var String SRM-GENERAL-CD25 = null ;  
+ #var String SRM-GENERAL-CD26 = null ;  
+ #var String SRM-GENERAL-CD27 = null ;  
+ #var String SRM-GENERAL-CD28 = null ;  
+ #var String SRM-GENERAL-CD29 = null ;  
+ #var String SRM-GENERAL-CD30 = null ;  
+ #var double SRM-BOSS-KB = null; 
+ #var double SRM-UNIT-SHIFT-KB = null; 
+ #var String SRM-MLTCPNY-CD = null ;  
+ #var double CNT-SRKNM = null; 
+ #var double SRK-KNM-SEQ = null; 
+ #var double SRK-END-STATUS = null; 
+ #var String SRK-K-SR-SYZ-CD = null ;  
+ #var String SRK-K-GENERAL-CD01 = null ;  
+ #var String SRK-K-GENERAL-CD02 = null ;  
+ #var String SRK-K-GENERAL-CD03 = null ;  
+ #var String SRK-K-GENERAL-CD04 = null ;  
+ #var String SRK-K-GENERAL-CD05 = null ;  
+ #var String SRK-K-GENERAL-CD06 = null ;  
+ #var String SRK-K-GENERAL-CD07 = null ;  
+ #var String SRK-K-GENERAL-CD08 = null ;  
+ #var String SRK-K-GENERAL-CD09 = null ;  
+ #var String SRK-K-GENERAL-CD10 = null ;  
+ #var double SRK-STATUS = null; 
+ #var double SRK-INSERT-FLG = null; 
+ #var double SRK-DUMMY-FLG = null; 
+ #var double SRK-IS-STS0-FLG = null; 
+ WK-SRMST-REC {  
+ #var double WSRM-SYA-ID = null; 
+ #var String WSRM-SDATE = null ;  
+ #var String WSRM-EDATE = null ;  
+ #var double WSRM-HR-NO = null; 
+ #var double WSRM-HRRK-KB = null; 
+ #var double WSRM-STATUS = null; 
+ #var double WSRM-TRG-KB = null; 
+ #var String WSRM-SR-SYZ-CD = null ;  
+ #var String WSRM-SYZ-PRC-DATE = null ;  
+ #var String WSRM-SYZ-HAT-DATE = null ;  
+ #var String WSRM-CHAKUNIN-DATE = null ;  
+ #var String WSRM-KINMU-SYUBETU-CD = null ;  
+ #var String WSRM-KS-PRC-DATE = null ;  
+ #var String WSRM-KYUMU-SYUBETU-CD = null ;  
+ #var double WSRM-JITAN-KINMU-KB = null; 
+ #var String WSRM-JITAN-KINMU-CD = null ;  
+ #var String WSRM-JITAN-SYUBETU-CD = null ;  
+ #var String WSRM-SIME-CD = null ;  
+ #var String WSRM-CAL-CD = null ;  
+ #var String WSRM-KINMU-CAL-CD = null ;  
+ #var String WSRM-HOLIDAY-TYPE-CD = null ;  
+ #var String WSRM-HT-PRC-DATE = null ;  
+ #var double WSRM-SAGYO-KEITAI-KB = null; 
+ #var String WSRM-SAGYO-KEITAI-CD = null ;  
+ #var double WSRM-PROJECT-KB = null; 
+ #var double WSRM-KINMUNY-KB = null; 
+ #var String WSRM-KINMUNY-CD = null ;  
+ #var double WSRM-SYORI-KB = null; 
+ #var String WSRM-SSYORIGRP-CD = null ;  
+ #var String WSRM-KYUKA-KEITAI-CD = null ;  
+ #var String WSRM-SUMSYA-KB = null ;  
+ #var String WSRM-KINMU-PTN-CD1 = null ;  
+ #var String WSRM-KINMU-PTN-CD2 = null ;  
+ #var String WSRM-KINMU-PTN-CD3 = null ;  
+ #var String WSRM-KINMU-PTN-CD4 = null ;  
+ #var String WSRM-JIKAN-CHECK-CD1 = null ;  
+ #var String WSRM-JIKAN-CHECK-CD2 = null ;  
+ #var String WSRM-JIKAN-CHECK-CD3 = null ;  
+ #var String WSRM-SR-SYZ-CD-BK = null ;  
+ #var double WSRM-OUEN-FLG = null; 
+ #var double WSRM-KANRI-KB = null; 
+ #var double WSRM-ADMIN-KB = null; 
+ #var double WSRM-CAL-KB = null; 
+ #var String WSRM-NK-KINZ-KDT = null ;  
+ #var String WSRM-NK-FUYO-KDT = null ;  
+ #var String WSRM-RK-KINZ-KDT = null ;  
+ #var String WSRM-RK-FUYO-KDT = null ;  
+ #var String WSRM-IK-KINZ-KDT = null ;  
+ #var double WSRM-SYUK-KB = null; 
+ #var double WSRM-TAIS-KB = null; 
+ #var double WSRM-KYUS-KB = null; 
+ #var String WSRM-KAI-CD = null ;  
+ #var String WSRM-SKAI-CD = null ;  
+ #var String WSRM-GKAI-CD = null ;  
+ #var String WSRM-GSYZ-CD = null ;  
+ #var String WSRM-KYUSJ-CD = null ;  
+ #var String WSRM-KK-SYORI-CD = null ;  
+ #var double WSRM-KKOJ-MT = null; 
+ #var double WSRM-KKOJ-DT = null; 
+ #var double WSRM-IKKOJ-MT = null; 
+ #var double WSRM-IKKOJ-DT = null; 
+ #var double WSRM-KYUSTKKB = null; 
+ #var String WSRM-RENKYUS-TDT = null ;  
+ #var String WSRM-RENSYUK-TDT = null ;  
+ #var double WSRM-SR-SYA-KB = null; 
+ #var double WSRM-KUMI-KB = null; 
+ #var String WSRM-GENERAL-CD1 = null ;  
+ #var String WSRM-GENERAL-CD2 = null ;  
+ #var String WSRM-GENERAL-CD3 = null ;  
+ #var String WSRM-GENERAL-CD4 = null ;  
+ #var String WSRM-GENERAL-CD5 = null ;  
+ #var String WSRM-GENERAL-CD6 = null ;  
+ #var String WSRM-GENERAL-CD7 = null ;  
+ #var String WSRM-GENERAL-CD8 = null ;  
+ #var String WSRM-GENERAL-CD9 = null ;  
+ #var String WSRM-GENERAL-CD10 = null ;  
+ #var String WSRM-GENERAL-CD11 = null ;  
+ #var String WSRM-GENERAL-CD12 = null ;  
+ #var String WSRM-GENERAL-CD13 = null ;  
+ #var String WSRM-GENERAL-CD14 = null ;  
+ #var String WSRM-GENERAL-CD15 = null ;  
+ #var String WSRM-GENERAL-CD16 = null ;  
+ #var String WSRM-GENERAL-CD17 = null ;  
+ #var String WSRM-GENERAL-CD18 = null ;  
+ #var String WSRM-GENERAL-CD19 = null ;  
+ #var String WSRM-GENERAL-CD20 = null ;  
+ #var String WSRM-GENERAL-CD21 = null ;  
+ #var String WSRM-GENERAL-CD22 = null ;  
+ #var String WSRM-GENERAL-CD23 = null ;  
+ #var String WSRM-GENERAL-CD24 = null ;  
+ #var String WSRM-GENERAL-CD25 = null ;  
+ #var String WSRM-GENERAL-CD26 = null ;  
+ #var String WSRM-GENERAL-CD27 = null ;  
+ #var String WSRM-GENERAL-CD28 = null ;  
+ #var String WSRM-GENERAL-CD29 = null ;  
+ #var String WSRM-GENERAL-CD30 = null ;  
+ #var double WSRM-BOSS-KB = null; 
+ #var double WSRM-UNIT-SHIFT-KB = null; 
+ #var String WSRM-MLTCPNY-CD = null ;  
+ CP-SRMST-REC {  
+ #var double CSRM-SYA-ID = null; 
+ #var String CSRM-SDATE = null ;  
+ #var String CSRM-EDATE = null ;  
+ #var double CSRM-HR-NO = null; 
+ #var double CSRM-HRRK-KB = null; 
+ #var double CSRM-STATUS = null; 
+ #var double CSRM-TRG-KB = null; 
+ #var String CSRM-SR-SYZ-CD = null ;  
+ #var String CSRM-SYZ-PRC-DATE = null ;  
+ #var String CSRM-SYZ-HAT-DATE = null ;  
+ #var String CSRM-CHAKUNIN-DATE = null ;  
+ #var String CSRM-KINMU-SYUBETU-CD = null ;  
+ #var String CSRM-KS-PRC-DATE = null ;  
+ #var String CSRM-KYUMU-SYUBETU-CD = null ;  
+ CP-JITAN-KINMU-KB {  
+ #var double CSRM-JITAN-KINMU-KB = null; 
+ #var String CSRM-JITAN-KINMU-CD = null ;  
+ #var String CSRM-JITAN-SYUBETU-CD = null ;  
+ #var String CSRM-SIME-CD = null ;  
+ #var String CSRM-CAL-CD = null ;  
+ #var String CSRM-KINMU-CAL-CD = null ;  
+ #var String CSRM-HOLIDAY-TYPE-CD = null ;  
+ #var String CSRM-HT-PRC-DATE = null ;  
+ CP-SAGYO-KEITAI-KB {  
+ #var double CSRM-SAGYO-KEITAI-KB = null; 
+ #var String CSRM-SAGYO-KEITAI-CD = null ;  
+ CP-PROJECT-KB {  
+ #var double CSRM-PROJECT-KB = null; 
+ CP-KINMUNY-KB {  
+ #var double CSRM-KINMUNY-KB = null; 
+ #var String CSRM-KINMUNY-CD = null ;  
+ CP-SYORI-KB {  
+ #var double CSRM-SYORI-KB = null; 
+ #var String CSRM-SSYORIGRP-CD = null ;  
+ #var String CSRM-KYUKA-KEITAI-CD = null ;  
+ #var String CSRM-SUMSYA-KB = null ;  
+ #var String CSRM-KINMU-PTN-CD1 = null ;  
+ #var String CSRM-KINMU-PTN-CD2 = null ;  
+ #var String CSRM-KINMU-PTN-CD3 = null ;  
+ #var String CSRM-KINMU-PTN-CD4 = null ;  
+ #var String CSRM-JIKAN-CHECK-CD1 = null ;  
+ #var String CSRM-JIKAN-CHECK-CD2 = null ;  
+ #var String CSRM-JIKAN-CHECK-CD3 = null ;  
+ #var String CSRM-SR-SYZ-CD-BK = null ;  
+ #var double CSRM-OUEN-FLG = null; 
+ CP-KANRI-KB {  
+ #var double CSRM-KANRI-KB = null; 
+ CP-ADMIN-KB {  
+ #var double CSRM-ADMIN-KB = null; 
+ CP-CAL-KB {  
+ #var double CSRM-CAL-KB = null; 
+ #var String CSRM-NK-KINZ-KDT = null ;  
+ #var String CSRM-NK-FUYO-KDT = null ;  
+ #var String CSRM-RK-KINZ-KDT = null ;  
+ #var String CSRM-RK-FUYO-KDT = null ;  
+ #var String CSRM-IK-KINZ-KDT = null ;  
+ CP-SYUK-KB {  
+ #var double CSRM-SYUK-KB = null; 
+ CP-TAIS-KB {  
+ #var double CSRM-TAIS-KB = null; 
+ CP-KYUS-KB {  
+ #var double CSRM-KYUS-KB = null; 
+ #var String CSRM-KAI-CD = null ;  
+ #var String CSRM-SKAI-CD = null ;  
+ #var String CSRM-GKAI-CD = null ;  
+ #var String CSRM-GSYZ-CD = null ;  
+ #var String CSRM-KYUSJ-CD = null ;  
+ #var String CSRM-KK-SYORI-CD = null ;  
+ CP-KKOJ-MT {  
+ #var double CSRM-KKOJ-MT = null; 
+ CP-KKOJ-DT {  
+ #var double CSRM-KKOJ-DT = null; 
+ CP-IKKOJ-MT {  
+ #var double CSRM-IKKOJ-MT = null; 
+ CP-IKKOJ-DT {  
+ #var double CSRM-IKKOJ-DT = null; 
+ CP-KYUSTKKB {  
+ #var double CSRM-KYUSTKKB = null; 
+ #var String CSRM-RENKYUS-TDT = null ;  
+ #var String CSRM-RENSYUK-TDT = null ;  
+ CP-SR-SYA-KB {  
+ #var double CSRM-SR-SYA-KB = null; 
+ CP-KUMI-KB {  
+ #var double CSRM-KUMI-KB = null; 
+ #var String CSRM-GENERAL-CD1 = null ;  
+ #var String CSRM-GENERAL-CD2 = null ;  
+ #var String CSRM-GENERAL-CD3 = null ;  
+ #var String CSRM-GENERAL-CD4 = null ;  
+ #var String CSRM-GENERAL-CD5 = null ;  
+ #var String CSRM-GENERAL-CD6 = null ;  
+ #var String CSRM-GENERAL-CD7 = null ;  
+ #var String CSRM-GENERAL-CD8 = null ;  
+ #var String CSRM-GENERAL-CD9 = null ;  
+ #var String CSRM-GENERAL-CD10 = null ;  
+ #var String CSRM-GENERAL-CD11 = null ;  
+ #var String CSRM-GENERAL-CD12 = null ;  
+ #var String CSRM-GENERAL-CD13 = null ;  
+ #var String CSRM-GENERAL-CD14 = null ;  
+ #var String CSRM-GENERAL-CD15 = null ;  
+ #var String CSRM-GENERAL-CD16 = null ;  
+ #var String CSRM-GENERAL-CD17 = null ;  
+ #var String CSRM-GENERAL-CD18 = null ;  
+ #var String CSRM-GENERAL-CD19 = null ;  
+ #var String CSRM-GENERAL-CD20 = null ;  
+ #var String CSRM-GENERAL-CD21 = null ;  
+ #var String CSRM-GENERAL-CD22 = null ;  
+ #var String CSRM-GENERAL-CD23 = null ;  
+ #var String CSRM-GENERAL-CD24 = null ;  
+ #var String CSRM-GENERAL-CD25 = null ;  
+ #var String CSRM-GENERAL-CD26 = null ;  
+ #var String CSRM-GENERAL-CD27 = null ;  
+ #var String CSRM-GENERAL-CD28 = null ;  
+ #var String CSRM-GENERAL-CD29 = null ;  
+ #var String CSRM-GENERAL-CD30 = null ;  
+ CP-BOSS-KB {  
+ #var double CSRM-BOSS-KB = null; 
+ CP-UNIT-SHIFT-KB {  
+ #var double CSRM-UNIT-SHIFT-KB = null; 
+ #var String CSRM-MLTCPNY-CD = null ;  
+ #var double CSRM-CNT-SRKNM = null; 
+ #var double CSRK-KNM-SEQ = null; 
+ #var double CSRK-END-STATUS = null; 
+ #var String CSRK-K-SR-SYZ-CD = null ;  
+ #var String CSRK-K-GENERAL-CD01 = null ;  
+ #var String CSRK-K-GENERAL-CD02 = null ;  
+ #var String CSRK-K-GENERAL-CD03 = null ;  
+ #var String CSRK-K-GENERAL-CD04 = null ;  
+ #var String CSRK-K-GENERAL-CD05 = null ;  
+ #var String CSRK-K-GENERAL-CD06 = null ;  
+ #var String CSRK-K-GENERAL-CD07 = null ;  
+ #var String CSRK-K-GENERAL-CD08 = null ;  
+ #var String CSRK-K-GENERAL-CD09 = null ;  
+ #var String CSRK-K-GENERAL-CD10 = null ;  
+ #var double CSRK-STATUS = null; 
+ #var double CSRK-INSERT-FLG = null; 
+ #var double CSRK-DUMMY-FLG = null; 
+ #var double CSRK-IS-STS0-FLG = null; 
+ SRMST-COMPARE-REC {  
+ #var double COM-SYA-ID = null; 
+ #var String COM-SDATE = null ;  
+ #var String COM-EDATE = null ;  
+ #var double COM-HR-NO = null; 
+ #var double COM-HRRK-KB = null; 
+ #var double COM-STATUS = null; 
+ #var double COM-TRG-KB = null; 
+ COM-SONOTA {  
+ #var String COM-SR-SYZ-CD = null ;  
+ #var String COM-SYZ-PRC-DATE = null ;  
+ #var String COM-SYZ-HAT-DATE = null ;  
+ #var String COM-CHAKUNIN-DATE = null ;  
+ #var String COM-KINMU-SYUBETU-CD = null ;  
+ #var String COM-KS-PRC-DATE = null ;  
+ #var String COM-KYUMU-SYUBETU-CD = null ;  
+ #var double COM-JITAN-KINMU-KB = null; 
+ #var String COM-JITAN-KINMU-CD = null ;  
+ #var String COM-JITAN-SYUBETU-CD = null ;  
+ #var String COM-SIME-CD = null ;  
+ #var String COM-CAL-CD = null ;  
+ #var String COM-KINMU-CAL-CD = null ;  
+ #var String COM-HOLIDAY-TYPE-CD = null ;  
+ #var String COM-HT-PRC-DATE = null ;  
+ #var double COM-SAGYO-KEITAI-KB = null; 
+ #var String COM-SAGYO-KEITAI-CD = null ;  
+ #var double COM-PROJECT-KB = null; 
+ #var double COM-KINMUNY-KB = null; 
+ #var String COM-KINMUNY-CD = null ;  
+ #var double COM-SYORI-KB = null; 
+ #var String COM-SSYORIGRP-CD = null ;  
+ #var String COM-KYUKA-KEITAI-CD = null ;  
+ #var String COM-SUMSYA-KB = null ;  
+ #var String COM-KINMU-PTN-CD1 = null ;  
+ #var String COM-KINMU-PTN-CD2 = null ;  
+ #var String COM-KINMU-PTN-CD3 = null ;  
+ #var String COM-KINMU-PTN-CD4 = null ;  
+ #var String COM-JIKAN-CHECK-CD1 = null ;  
+ #var String COM-JIKAN-CHECK-CD2 = null ;  
+ #var String COM-JIKAN-CHECK-CD3 = null ;  
+ #var String COM-SR-SYZ-CD-BK = null ;  
+ #var double COM-OUEN-FLG = null; 
+ #var double COM-KANRI-KB = null; 
+ #var double COM-ADMIN-KB = null; 
+ #var double COM-CAL-KB = null; 
+ #var String COM-NK-KINZ-KDT = null ;  
+ #var String COM-NK-FUYO-KDT = null ;  
+ #var String COM-RK-KINZ-KDT = null ;  
+ #var String COM-RK-FUYO-KDT = null ;  
+ #var String COM-IK-KINZ-KDT = null ;  
+ #var double COM-SYUK-KB = null; 
+ #var double COM-TAIS-KB = null; 
+ #var double COM-KYUS-KB = null; 
+ #var String COM-KAI-CD = null ;  
+ #var String COM-SKAI-CD = null ;  
+ #var String COM-GKAI-CD = null ;  
+ #var String COM-GSYZ-CD = null ;  
+ #var String COM-KYUSJ-CD = null ;  
+ #var String COM-KK-SYORI-CD = null ;  
+ #var double COM-KKOJ-MT = null; 
+ #var double COM-KKOJ-DT = null; 
+ #var double COM-IKKOJ-MT = null; 
+ #var double COM-IKKOJ-DT = null; 
+ #var double COM-KYUSTKKB = null; 
+ #var String COM-RENKYUS-TDT = null ;  
+ #var String COM-RENSYUK-TDT = null ;  
+ #var double COM-SR-SYA-KB = null; 
+ #var double COM-KUMI-KB = null; 
+ #var String COM-GENERAL-CD1 = null ;  
+ #var String COM-GENERAL-CD2 = null ;  
+ #var String COM-GENERAL-CD3 = null ;  
+ #var String COM-GENERAL-CD4 = null ;  
+ #var String COM-GENERAL-CD5 = null ;  
+ #var String COM-GENERAL-CD6 = null ;  
+ #var String COM-GENERAL-CD7 = null ;  
+ #var String COM-GENERAL-CD8 = null ;  
+ #var String COM-GENERAL-CD9 = null ;  
+ #var String COM-GENERAL-CD10 = null ;  
+ #var String COM-GENERAL-CD11 = null ;  
+ #var String COM-GENERAL-CD12 = null ;  
+ #var String COM-GENERAL-CD13 = null ;  
+ #var String COM-GENERAL-CD14 = null ;  
+ #var String COM-GENERAL-CD15 = null ;  
+ #var String COM-GENERAL-CD16 = null ;  
+ #var String COM-GENERAL-CD17 = null ;  
+ #var String COM-GENERAL-CD18 = null ;  
+ #var String COM-GENERAL-CD19 = null ;  
+ #var String COM-GENERAL-CD20 = null ;  
+ #var String COM-GENERAL-CD21 = null ;  
+ #var String COM-GENERAL-CD22 = null ;  
+ #var String COM-GENERAL-CD23 = null ;  
+ #var String COM-GENERAL-CD24 = null ;  
+ #var String COM-GENERAL-CD25 = null ;  
+ #var String COM-GENERAL-CD26 = null ;  
+ #var String COM-GENERAL-CD27 = null ;  
+ #var String COM-GENERAL-CD28 = null ;  
+ #var String COM-GENERAL-CD29 = null ;  
+ #var String COM-GENERAL-CD30 = null ;  
+ #var double COM-BOSS-KB = null; 
+ #var double COM-UNIT-SHIFT-KB = null; 
+ #var String COM-MLTCPNY-CD = null ;  
+ #var double COM-CNT-SRKNM = null; 
+ #var double COM-KNM-SEQ = null; 
+ #var double COM-END-STATUS = null; 
+ #var String COM-K-SR-SYZ-CD = null ;  
+ #var String COM-K-GENERAL-CD01 = null ;  
+ #var String COM-K-GENERAL-CD02 = null ;  
+ #var String COM-K-GENERAL-CD03 = null ;  
+ #var String COM-K-GENERAL-CD04 = null ;  
+ #var String COM-K-GENERAL-CD05 = null ;  
+ #var String COM-K-GENERAL-CD06 = null ;  
+ #var String COM-K-GENERAL-CD07 = null ;  
+ #var String COM-K-GENERAL-CD08 = null ;  
+ #var String COM-K-GENERAL-CD09 = null ;  
+ #var String COM-K-GENERAL-CD10 = null ;  
+ #var double COM-SRK-STATUS = null; 
+ #var double COM-SRK-INSERT-FLG = null; 
+ #var double COM-INSERT-FLG = null; 
+ #var double COM-IS-STS0-FLG = null; 
+ #var double WSRK-SYA-ID = null; 
+ #var String WSRK-SDATE = null ;  
+ #var String WSRK-EDATE = null ;  
+ WK-SRKNM-REC {  
+ #var double WSRK-KNM-SEQ = null; 
+ #var double WSRK-END-STATUS = null; 
+ #var String WSRK-K-SR-SYZ-CD = null ;  
+ #var String WSRK-K-GENERAL-CD01 = null ;  
+ #var String WSRK-K-GENERAL-CD02 = null ;  
+ #var String WSRK-K-GENERAL-CD03 = null ;  
+ #var String WSRK-K-GENERAL-CD04 = null ;  
+ #var String WSRK-K-GENERAL-CD05 = null ;  
+ #var String WSRK-K-GENERAL-CD06 = null ;  
+ #var String WSRK-K-GENERAL-CD07 = null ;  
+ #var String WSRK-K-GENERAL-CD08 = null ;  
+ #var String WSRK-K-GENERAL-CD09 = null ;  
+ #var String WSRK-K-GENERAL-CD10 = null ;  
+ #var double WSRK-STATUS = null; 
+ #var double WSRK-INSERT-FLG = null; 
+ #var double WSRK-DUMMY-FLG = null; 
+ #var double WSRK-IS-STS0-FLG = null; 
+ SEC-WK {  
+ #var String SEC-JOBID = null ;  
+ #var double SEC-ENABLED = null; 
+ #var String SEC-DATE = null ;  
+ #var String PAR-ID-STR = null ;  
+ PARA-CONTR {  
+ #var double PR-CNT = null; 
+ #var double PR-TIME = ZERO ;  
+ #var double PM-ERROR-CNT = null; 
+ #var double JL-PARA-CNT = null; 
+ #var double JL-PARA-OK-CNT = null; 
+ SIM-WK {  
+ #var String P-SIM-KB = SPACE ;  
+ #var double SIM-KB = null; 
+ #var double USE-SIM = null; 
+ #var double DOING-SIM = null; 
+ #var double DBHR-MAX = 1000 ;  
+ #var double CNT-DBHR = null; 
+ DBHR-REC {  
+ #var double KIHON-HR-MAX = 1000 ;  
+ #var double CNT-KIHON-HR = null; 
+ KIHON-HR-REC {  
+ #var double DBTRNRK-MAX = 1000 ;  
+ #var double CNT-DBTRNRK = null; 
+ DBTRNRK-REC {  
+ CONST-AREA {  
+ #var String C-PGMID = "SRJLNK002" ;  
+ #var String C-MAX-DATE = "2382/12/31" ;  
+ #var String C-VERSION = "33010100" ;  
+ WS-SRLNKTRN-REC {  
+ #var double CNT-LNKTRN = null; 
+ #var double WS-SRTBL-NO = null; 
+ #var String WS-SRFLD-ID = null ;  
+ #var String WS-SRFLD-OVAL = null ;  
+ #var String WS-SRFLD-OVAL-J = null ;  
+ #var String WS-SRFLD-NVAL = null ;  
+ #var String WS-SRFLD-NVAL-J = null ;  
+ #var String WS-LNK-DATE = null ;  
+ #var double WS-TRN-KB = null; 
+ #var double WS-KNM-SEQ = null; 
+ #var double WS-HR-NO = null; 
+ #var double WS-HRRK-KB = null; 
+ #var double WS-STATUS = null; 
+ #var double WS-ENTRY-KB = null; 
+ #var double WS-SYORI-FLG = null; 
+ WORK-AREA {  
+ #var double OLD-SYA-ID = null; 
+ #var String OLD-LNK-DATE = null ;  
+ #var double OLD-HR-NO = null; 
+ #var double OLD-HRRK-KB = null; 
+ #var double OLD-STATUS = null; 
+ #var double OLD-TRN-KB = null; 
+ #var double OLD-LNK-DATE-KB = null; 
+ #var String SRFLD-ID = null ;  
+ #var String WK-VAL-CHR = null ;  
+ WK-VAL-CHR-R = WK-VAL-CHR ;  
+ #var double WK-VAL-DECEDT = null; 
+ WK-VAL-DECEDT-R = WK-VAL-DECEDT ;  
+ DATE-NOW {  
+ #var String DATE-NOW-YY = null ;  
+ #var String DATE-NOW-MM = null ;  
+ #var String DATE-NOW-DD = null ;  
+ #var String DATE-NOW-HH = null ;  
+ #var String DATE-NOW-FF = null ;  
+ #var String DATE-NOW-SS = null ;  
+ #var String  = null ;  
+ #var double WK-ADD-DAYS = null; 
+ #var String WK-DATE = null ;  
+ #var double TMP-DATE-NUM = null; 
+ #var double TMP-YEAR = null; 
+ #var double TMP-MONTH = null; 
+ #var double TMP-DAY = null; 
+ #var String TMP-YEAR-STR = null ;  
+ #var String TMP-MONTH-STR = null ;  
+ #var String TMP-DAY-STR = null ;  
+ #var double STRING-POINTER = null; 
+ FLG-AREA {  
+ #var double LNKSYAIN-EOF-FLG = null; 
+ #var double RESTORE-EOF-FLG = null; 
+ #var double CHK-STS1-FLG = null; 
+ #var double IS-STS0-FLG = null; 
+ #var double SRM-EQUAL-DATE = null; 
+ #var double SAME-DATA-FLG = null; 
+ #var double FLG-END = null; 
+ IDX-AREA {  
+ #var double IX = null; 
+ #var double IY = null; 
+ #var double IZ = null; 
+ #var double SRM-IDX = null; 
+ #var double SRM-IDX2 = null; 
+ #var double KNM-IDX = null; 
+ #var double KNM-IDX2 = null; 
+ #var double SRM-PTR = null; 
+ #var double SRM-PTR2 = null; 
+ #var double KNM-PTR = null; 
+ #var double KNM-PTR2 = null; 
+ #var double WK-IDX = null; 
+ #var double WK-IDX2 = null; 
+ #var double WK-SRM-IDX = null; 
+ #var double IX1 = null; 
+ #var double IX2 = null; 
+ #var double IX3 = null; 
+ #var double IX4 = null; 
+ #var double IX5 = null; 
+ #var double IX8 = null; 
+ #var double IX9 = null; 
+ #var double IX6 = null; 
+ #var double IX7 = null; 
+ #var double DBHR-PTR = null; 
+ #var double KIHON-HR-PTR = null; 
+ CNT-AREA {  
+ #var double SRM-NEW-CNT = null; 
+ #var double SRM-INS-CNT = null; 
+ #var double SRM-UPD-CNT = null; 
+ #var double SRM-DEL-CNT = null; 
+ #var double SRK-NEW-CNT = null; 
+ #var double SRK-INS-CNT = null; 
+ #var double SRK-UPD-CNT = null; 
+ #var double SRK-DEL-CNT = null; 
+ #var double SRK-MRG-CNT = null; 
+ #var double WK-TRN-CNT = null; 
+ TRN-SQL {  
+ #var String  = "SELECT              " ;  
+ #var String  = " rk.sya_id,         " ;  
+ #var String  = " rk.srtbl_no,       " ;  
+ #var String  = " rk.srfld_id,       " ;  
+ #var String  = " rk.srfld_oval,     " ;  
+ #var String  = " rk.srfld_nval,     " ;  
+ #var String  = " to_char(rk.lnk_date," ;  
+ #var String  = "     'YYYY/MM/DD'), " ;  
+ #var String  = " rk.status,         " ;  
+ #var String  = " rk.hr_no,          " ;  
+ #var String  = " rk.hrrk_kb,        " ;  
+ #var String  = " rk.trn_kb,         " ;  
+ #var String  = " rk.knm_seq,        " ;  
+ #var String  = " rk.entry_kb,       " ;  
+ #var String  = " NVL(rk.lnk_date_kb,1)" ;  
+ #var String  = " FROM sr_jlnktrn_rk rk " ;  
+ #var String  = " WHERE rk.srtbl_no < 91000" ;  
+ #var String  = " AND ((rk.syori_flg = 0 " ;  
+ #var String PAST-JK-PAR = null ;  
+ #var String FUTURE-JK-PAR = null ;  
+ #var String  = " ) OR (rk.syori_flg = 1))" ;  
+ #var String  = " AND rk.restore_flg = 0 " ;  
+ #var String  = " AND EXISTS(        " ;  
+ #var String  = " SELECT 1 FROM      " ;  
+ #var String  = " sr_jlnk_syain js   " ;  
+ #var String  = " WHERE  rk.sya_id   " ;  
+ #var String  = "      = js.sya_id   " ;  
+ #var String  = " AND js.par_id =    " ;  
+ #var String WK-PAR-ID = null ;  
+ #var String  = ")" ;  
+ #var String  = " ORDER BY 1,6,7,hatdate," ;  
+ #var String  = "8,9,2,11,3,rk.prc_date " ;  
+ SYORI-UPD-SQL {  
+ #var String  = "UPDATE              " ;  
+ #var String  = " sr_jlnktrn_rk rk SET " ;  
+ #var String  = " syori_flg = 9,     " ;  
+ #var String  = " act_lnk_date = " ;  
+ #var String  = " to_date(rtrim('" ;  
+ #var String ACT-LNK-TIME = null ;  
+ #var String  = "'), " ;  
+ #var String  = "'YYYY/MM/DD HH24:MI:SS')," ;  
+ #var String  = " prc_date = sysdate " ;  
+ #var String  = " WHERE rk.srtbl_no =" ;  
+ #var String SYORI-UPD-TBL-NO = null ;  
+ #var String  = " AND ((rk.syori_flg = 0 " ;  
+ #var String PAST-UPD-JK-PAR = null ;  
+ #var String FUTURE-UPD-JK-PAR = null ;  
+ #var String  = " ) OR (rk.syori_flg = 1))" ;  
+ #var String SYORI-JK-PAR = null ;  
+ PAR-JK-SQL {  
+ #var String  = " AND EXISTS(        " ;  
+ #var String  = " SELECT 1 FROM      " ;  
+ #var String  = " sr_jlnk_syain js   " ;  
+ #var String  = " WHERE  rk.sya_id   " ;  
+ #var String  = "      = js.sya_id   " ;  
+ #var String  = " AND js.par_id =    " ;  
+ #var String WK-PAR-ID2 = null ;  
+ #var String  = ")" ;  
+ PAST-JK-SQL {  
+ #var String  = " AND ((EXISTS(      " ;  
+ #var String  = " SELECT 1 FROM      " ;  
+ #var String  = " sr_hrinfo " ;  
+ #var String  = " WHERE  rk.sya_id   " ;  
+ #var String  = "  = sya_id          " ;  
+ #var String  = " AND rk.hr_no = hr_no " ;  
+ #var String  = " AND rk.hrrk_kb = hrrk_kb " ;  
+ #var String  = " AND hatdate >=     " ;  
+ #var String  = "  (  to_date(rtrim('" ;  
+ #var String COMPARE-PAST-TIME = null ;  
+ #var String  = "'), " ;  
+ #var String  = "'YYYY/MM/DD HH24:MI:SS') - " ;  
+ #var String JK-PAST-SUSPEND-DAYS = null ;  
+ #var String  = "))) or " ;  
+ #var String  = "(rk.trn_kb >=2 AND " ;  
+ #var String  = " rk.trn_kb <=6))" ;  
+ FUTURE-JK-SQL {  
+ #var String  = " AND EXISTS(        " ;  
+ #var String  = " SELECT 1 FROM      " ;  
+ #var String  = " sr_hrinfo " ;  
+ #var String  = " WHERE  rk.sya_id   " ;  
+ #var String  = "  = sya_id          " ;  
+ #var String  = " AND rk.hr_no = hr_no " ;  
+ #var String  = " AND rk.hrrk_kb = hrrk_kb " ;  
+ #var String  = " AND hatdate <=     " ;  
+ #var String  = "  (  to_date(rtrim('" ;  
+ #var String COMPARE-FUTURE-TIME = null ;  
+ #var String  = "'), " ;  
+ #var String  = "'YYYY/MM/DD HH24:MI:SS') + " ;  
+ #var String JK-FUTURE-SUSPEND-DAYS = null ;  
+ #var String  = "))" ;  
+ RESTORE-UPD-SQL {  
+ #var String  = "UPDATE              " ;  
+ #var String  = " sr_jlnktrn_rk rk SET " ;  
+ #var String  = " restore_flg = -1,  " ;  
+ #var String  = " prc_date = sysdate " ;  
+ #var String  = " WHERE rk.srtbl_no =" ;  
+ #var String RESTORE-UPD-TBL-NO = null ;  
+ #var String  = " AND rk.syori_flg = 9 " ;  
+ #var String  = " AND rk.restore_flg=0 " ;  
+ #var String  = " AND EXISTS(        " ;  
+ #var String  = " SELECT 1 FROM      " ;  
+ #var String  = " sr_jlnkhr_no jh    " ;  
+ #var String  = " WHERE  jh.sya_id   " ;  
+ #var String  = "      = rk.sya_id   " ;  
+ #var String  = " AND    jh.hr_no    " ;  
+ #var String  = "      = rk.hr_no    " ;  
+ #var String  = " AND    jh.hrrk_kb  " ;  
+ #var String  = "      = rk.hrrk_kb  " ;  
+ #var String  = " AND jh.status = 3) " ;  
+ #var String  = " AND EXISTS(        " ;  
+ #var String  = " SELECT 1 FROM      " ;  
+ #var String  = " sr_jlnktrn_rk rk2  " ;  
+ #var String  = " WHERE  rk2.srtbl_no" ;  
+ #var String  = "      = rk.srtbl_no " ;  
+ #var String  = " AND rk2.syori_flg=1" ;  
+ #var String  = " AND rk2.trn_kb = 9 " ;  
+ #var String  = " AND    rk2.sya_id  " ;  
+ #var String  = "      = rk.sya_id   " ;  
+ #var String  = " AND    rk2.hr_no   " ;  
+ #var String  = "      = rk.hr_no    " ;  
+ #var String  = " AND    rk2.status  " ;  
+ #var String  = "      = rk.status)  " ;  
+ #var String RESTORE-JK-PAR = null ;  
+ PRS-TIME {  
+ #var String SLP-TIME = "20" ;  
+ #var String  = "00" ;   
+ #beginsection
+
+public static void CNTL()
+{
+ #beginstatement 
+ DISPLAY-TIME()  ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "***" ) ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "*** PROGRAM START !!=> " + C-PGMID  + " " + DATE-NOW-TXT  ) ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "*** PROGRAM VERSION => " + C-VERSION  ) ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "***" ) ;
+ #endstatement   
+  #beginstatement 
+ INIT()  ;
+ #endstatement   
+  #beginstatement 
+ MAIN()  ;
+ #endstatement   
+  #beginstatement 
+ FINI()  ;
+ #endstatement   
+  #beginstatement 
+ DISPLAY-TIME()  ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "***" ) ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "*** PROGRAM END !!  => " + C-PGMID  + " " + DATE-NOW-TXT  ) ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "***" ) ;
+ #endstatement   
+}
+
+#endsection 
+ #beginsection
+
+public static void DISPLAY-TIME()
+{
+ #beginstatement 
+System.out.println( "================ INIT END   ================ " + TIME-NOW-TXT  ) ;
+ #endstatement   
+}
+
+#endsection 
+ #beginsection
+
+public static void VER002-SET()
+{
+ #beginstatement 
+#BEGINSQL
+UPDATE 
+ sr_jlnk_rk 
+ SET 
+ VER_002 
+ =  
+ #beginidentifier
+:C-VERSION
+#endidentifier 
+ WHERE  
+ seq_no 
+ =  
+ (  
+ SELECT 
+ max 
+ (  
+ seq_no 
+ )  
+ FROM  
+ sr_jlnk_rk 
+ )  
+ AND  
+ par_id 
+ =  
+ 0 
+ AND  
+ status 
+ =  
+ 2 
+ AND  
+ ver_002 
+ is 
+ null
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+if ( ( PAR-ID > 0 ) )  
+{
+	 #beginstatement 
+	#BEGINSQL
+	 INSERT  
+	 INTO 
+	 SR_JLNK_RK 
+	 (  
+	 SEQ_NO 
+	 ,  
+	 PAR_ID 
+	 ,  
+	 LNKTBL_NO 
+	 ,  
+	 ACT_KB 
+	 ,  
+	 STIME 
+	 ,  
+	 STATUS 
+	 ,  
+	 LAST_TIME 
+	 ,  
+	 LAST_LNK_TIME 
+	 ,  
+	 START_DATE 
+	 ,  
+	 END_DATE 
+	 ,  
+	 LNK_KB 
+	 ,  
+	 LNKFLG01 
+	 ,  
+	 LNKFLG02 
+	 ,  
+	 LNKFLG03 
+	 ,  
+	 LNKFLG04 
+	 ,  
+	 LNKFLG05 
+	 ,  
+	 LNKFLG06 
+	 ,  
+	 LNKFLG07 
+	 ,  
+	 LNKFLG08 
+	 ,  
+	 LNKFLG09 
+	 ,  
+	 LNKFLG10 
+	 ,  
+	 PAST_LNK_KB 
+	 ,  
+	 FUTURE_LNK_KB 
+	 ,  
+	 PAST_SUSPEND_DAYS 
+	 ,  
+	 FUTURE_SUSPEND_DAYS 
+	 ,  
+	 VER_001 
+	 ,  
+	 VER_002 
+	 ,  
+	 VER_003 
+	 )  
+	 SELECT 
+	 SEQ_NO 
+	 ,  
+	 #beginidentifier
+	:PAR-ID
+	#endidentifier 
+	 LNKTBL_NO 
+	 ,  
+	 ACT_KB 
+	 ,  
+	 sysdate 
+	 ,  
+	 STATUS 
+	 ,  
+	 LAST_TIME 
+	 ,  
+	 LAST_LNK_TIME 
+	 ,  
+	 START_DATE 
+	 ,  
+	 END_DATE 
+	 ,  
+	 LNK_KB 
+	 ,  
+	 LNKFLG01 
+	 ,  
+	 LNKFLG02 
+	 ,  
+	 LNKFLG03 
+	 ,  
+	 LNKFLG04 
+	 ,  
+	 LNKFLG05 
+	 ,  
+	 LNKFLG06 
+	 ,  
+	 LNKFLG07 
+	 ,  
+	 LNKFLG08 
+	 ,  
+	 LNKFLG09 
+	 ,  
+	 LNKFLG10 
+	 ,  
+	 PAST_LNK_KB 
+	 ,  
+	 FUTURE_LNK_KB 
+	 ,  
+	 PAST_SUSPEND_DAYS 
+	 ,  
+	 FUTURE_SUSPEND_DAYS 
+	 ,  
+	 VER_001 
+	 ,  
+	 VER_002 
+	 ,  
+	 VER_003 
+	 FROM  
+	 sr_jlnk_rk 
+	 WHERE  
+	 seq_no 
+	 =  
+	 (  
+	 SELECT 
+	 max 
+	 (  
+	 seq_no 
+	 )  
+	 FROM  
+	 sr_jlnk_rk 
+	 )  
+	 AND  
+	 par_id 
+	 =  
+	 0 
+	 AND  
+	 status 
+	 =  
+	 2
+	#ENDSQL 
+	;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+COMMIT
+#ENDSQL 
+;
+ #endstatement   
+}
+
+#endsection 
+ #beginsection
+
+public static void SRJLNKCTRL-GET()
+{
+ #beginstatement 
+SRJLNKCTRL-REC ;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+SELECT 
+ past_lnk_kb 
+ ,  
+ future_lnk_kb 
+ ,  
+ past_suspend_days 
+ ,  
+ future_suspend_days 
+ ,  
+ lnkflg06 
+ INTO 
+ #beginidentifier
+:PAST-LNK-KB
+#endidentifier 
+ #beginidentifier
+:FUTURE-LNK-KB
+#endidentifier 
+ #beginidentifier
+:PAST-SUSPEND-DAYS
+#endidentifier 
+ #beginidentifier
+:FUTURE-SUSPEND-DAYS
+#endidentifier 
+ #beginidentifier
+:LNK-RESTORE
+#endidentifier 
+ FROM  
+ sr_jlnkctrl 
+ WHERE  
+ lnktbl_no 
+ =  
+ 90000
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+SELECT 
+ VAL 
+ INTO 
+ #beginidentifier
+:USE-SIM
+#endidentifier 
+ FROM  
+ SR_JLNK_INFO_FLG 
+ WHERE  
+ NAME 
+ =  
+ '  
+ use_sim 
+ ' 
+#ENDSQL 
+;
+ #endstatement   
+}
+
+#endsection 
+ #beginsection
+
+public static void MAIN()
+{
+ #beginstatement 
+ DISPLAY-TIME()  ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "================ MAIN START ================ " + TIME-NOW-TXT  ) ;
+ #endstatement   
+  #beginstatement 
+if ( ( SIM-KB == 1 ) && ( USE-SIM == 0 ) )  
+{
+	 #beginstatement 
+	System.out.println( "*** �?�実行モード�?��?��??処�?�終了 ***" ) ;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+ SRLNKTRN-DEL()  ;
+ #endstatement   
+  #beginstatement 
+PAST-JK-PAR FUTURE-JK-PAR SYORI-JK-PAR RESTORE-JK-PAR  SPACE;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+SELECT 
+ to_char 
+ (  
+ sysdate 
+ ,  
+ '  
+ YYYY 
+ /  
+ MM 
+ /  
+ DD 
+ HH24:MI:SS 
+ '  
+ )  
+ INTO 
+ #beginidentifier
+:WK-PRC-DATE
+#endidentifier 
+ FROM  
+ DUAL
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+if ( ( PAST-LNK-KB  <>  0 ) )  
+{
+	 #beginstatement 
+	JK-PAST-SUSPEND-DAYS  PAST-SUSPEND-DAYS;
+	 #endstatement  
+	  #beginstatement 
+	COMPARE-PAST-TIME  WK-PRC-DATE;
+	 #endstatement  
+	  #beginstatement 
+	PAST-JK-PAR  PAST-JK-SQL;
+	 #endstatement  
+	  #beginstatement 
+	PAST-UPD-JK-PAR  PAST-JK-SQL;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+if ( ( FUTURE-LNK-KB  <>  0 ) )  
+{
+	 #beginstatement 
+	JK-FUTURE-SUSPEND-DAYS  FUTURE-SUSPEND-DAYS;
+	 #endstatement  
+	  #beginstatement 
+	COMPARE-FUTURE-TIME  WK-PRC-DATE;
+	 #endstatement  
+	  #beginstatement 
+	FUTURE-JK-PAR  FUTURE-JK-SQL;
+	 #endstatement  
+	  #beginstatement 
+	FUTURE-UPD-JK-PAR  FUTURE-JK-SQL;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+if ( ( PAR-ID > 0 ) )  
+{
+	 #beginstatement 
+	SYORI-JK-PAR RESTORE-JK-PAR  PAR-JK-SQL;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+if ( ( PAST-LNK-KB == 0 ) )  
+{
+	 #beginstatement 
+	WK-PAST-DATE  "1900/01/01 00:00:00";
+	 #endstatement   
+}
+	else {  #beginstatement 
+	WK-PAST-DATE  WK-PRC-DATE;
+	 #endstatement   } ;
+ #endstatement   
+  #beginstatement 
+if ( ( FUTURE-LNK-KB == 0 ) )  
+{
+	 #beginstatement 
+	WK-FUTURE-DATE  "2382/12/31 23:59:59";
+	 #endstatement   
+}
+	else {  #beginstatement 
+	WK-FUTURE-DATE  WK-PRC-DATE;
+	 #endstatement   } ;
+ #endstatement   
+  #beginstatement 
+SQL-PAR  TRN-SQL;
+ #endstatement   
+  #beginstatement 
+System.out.println( " ---TRN-SQL--- " + SQL-PAR  ) ;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+PREPARE 
+ srjlnktrncsr_S1 
+ FROM  
+ #beginidentifier
+:SQL-PAR
+#endidentifier
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+ DECLARE  
+ srjlnktrncsr 
+ CURSOR 
+ FOR 
+ srjlnktrncsr_S1
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+OPEN 
+ srjlnktrncsr 
+ FOR 
+ READONLY
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+ DECLARE  
+ restoretrnrkcsr 
+ CURSOR 
+ FOR 
+ SELECT 
+ sya_id 
+ ,  
+ srtbl_no 
+ ,  
+ srfld_id 
+ ,  
+ srfld_oval 
+ ,  
+ srfld_nval 
+ ,  
+ to_char 
+ (  
+ lnk_date 
+ ,  
+ '  
+ YYYY 
+ /  
+ MM 
+ /  
+ DD 
+ '  
+ )  
+ ,  
+ rk 
+ . 
+ status 
+ ,  
+ hr_no 
+ ,  
+ hrrk_kb 
+ ,  
+ trn_kb 
+ ,  
+ knm_seq 
+ ,  
+ entry_kb 
+ FROM  
+ sr_jlnktrn_rk 
+ rk 
+ WHERE  
+ srtbl_no 
+ <  
+ 91000 
+ AND  
+ trn_kb 
+ =  
+ 9 
+ AND  
+ syori_flg 
+ =  
+ 1 
+ AND  
+ exists 
+ (  
+ SELECT 
+ 0 
+ FROM  
+ sr_jlnk_syain 
+ js 
+ WHERE  
+ rk 
+ . 
+ sya_id 
+ =  
+ js 
+ . 
+ sya_id 
+ AND  
+ js 
+ . 
+ par_id 
+ =  
+ #beginidentifier
+:PAR-ID
+#endidentifier 
+ )  
+ ORDER 
+ BY  
+ 1 
+ ,  
+ act_lnk_date 
+ desc 
+ ,  
+ 6 
+ desc 
+ ,  
+ 7 
+ desc 
+ ,  
+ hatdate 
+ desc 
+ ,  
+ 8 
+ desc 
+ ,  
+ 9 
+ desc 
+ ,  
+ 2 
+ ,  
+ 11 
+ ,  
+ 3
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+OPEN 
+ restoretrnrkcsr 
+ FOR 
+ READONLY
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+ SRLNKTRN-FET()  ;
+ #endstatement   
+  #beginstatement 
+if ( ( LNKSYAIN-EOF-FLG == 0 ) )  
+{
+	 #beginstatement 
+	OLD-SYA-ID  SRT-SYA-ID;
+	 #endstatement  
+	  #beginstatement 
+	OLD-LNK-DATE  SRT-LNK-DATE;
+	 #endstatement  
+	  #beginstatement 
+	OLD-HR-NO  SRT-HR-NO;
+	 #endstatement  
+	  #beginstatement 
+	OLD-HRRK-KB  SRT-HRRK-KB;
+	 #endstatement  
+	  #beginstatement 
+	OLD-STATUS  SRT-STATUS;
+	 #endstatement  
+	  #beginstatement 
+	OLD-TRN-KB  SRT-TRN-KB;
+	 #endstatement  
+	  #beginstatement 
+	OLD-LNK-DATE-KB  SRT-LNK-DATE-KB;
+	 #endstatement  
+	  #beginstatement 
+	 DISPLAY-TIME()  ;
+	 #endstatement  
+	  #beginstatement 
+	System.out.println( " >> メインループ START << " + TIME-NOW-TXT  ) ;
+	 #endstatement  
+	  #beginstatement 
+	while ( ! ( ( ( LNKSYAIN-EOF-FLG == 1 ) )  ) )
+	{ 
+		 #beginstatement 
+		 SRLNKTRN-SET()  ;
+		 #endstatement   
+		  #beginstatement 
+		 SRMST-WRITE()  ;
+		 #endstatement   
+		  #beginstatement 
+		if ( ( TRN-KB < 9 ) )  
+		{
+			 #beginstatement 
+			 TRNRK-OLD-UPD-SET()  ;
+			 #endstatement   
+		}
+			else {  #beginstatement 
+			 TRNRK-NEW-UPD-SET()  ;
+			 #endstatement   } ;
+		 #endstatement   
+		  #beginstatement 
+		WS-SRLNKTRN-REC ;
+		 #endstatement   
+		  #beginstatement 
+		 DATA-ADJUST-KENM()  ;
+		 #endstatement   ) ;
+	};
+	 #endstatement  
+	  #beginstatement 
+	 DISPLAY-TIME()  ;
+	 #endstatement  
+	  #beginstatement 
+	System.out.println( " >> メインループ END   << " + TIME-NOW-TXT  ) ;
+	 #endstatement  
+	  #beginstatement 
+	if ( ( CNT-DBHR > 0 ) )  
+	{
+		 #beginstatement 
+		 DBHR-UPD()  ;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+CLOSE 
+ srjlnktrncsr
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+CLOSE 
+ restoretrnrkcsr
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+if ( ( CNT-DBTRNRK > 0 ) )  
+{
+	 #beginstatement 
+	 DBTRNRK-UPD()  ;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+ DISPLAY-TIME()  ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "================ MAIN END   ================ " + TIME-NOW-TXT  ) ;
+ #endstatement   
+}
+
+#endsection 
+ #beginsection
+
+public static void SRLNKTRN-DEL()
+{
+ #beginstatement 
+ DISPLAY-TIME()  ;
+ #endstatement   
+  #beginstatement 
+System.out.println( " >> SRLNKTRN-DEL START << " + TIME-NOW-TXT  ) ;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+DELETE 
+ FROM  
+ sr_jlnktrn_rk 
+ rk 
+ WHERE  
+ OT 
+ EXISTS 
+ (  
+ SELECT 
+ 0 
+ FROM  
+ sr_hrinfo 
+ hi 
+ WHERE  
+ hi 
+ . 
+ hr_no 
+ =  
+ rk 
+ . 
+ hr_no 
+ AND  
+ hi 
+ . 
+ hrrk_kb 
+ =  
+ rk 
+ . 
+ hrrk_kb 
+ AND  
+ hi 
+ . 
+ sya_id 
+ =  
+ rk 
+ . 
+ sya_id 
+ )  
+ AND  
+ rk 
+ . 
+ srtbl_no 
+ <  
+ 91000 
+ AND  
+ rk 
+ . 
+ hr_no 
+ >  
+ 0 
+ AND  
+ rk 
+ . 
+ syori_flg 
+ <  
+ 9 
+ AND  
+ rk 
+ . 
+ restore_flg 
+ =  
+ 0 
+ AND  
+ exists 
+ (  
+ SELECT 
+ 0 
+ FROM  
+ sr_jlnk_syain 
+ js 
+ WHERE  
+ rk 
+ . 
+ sya_id 
+ =  
+ js 
+ . 
+ sya_id 
+ AND  
+ js 
+ . 
+ par_id 
+ =  
+ #beginidentifier
+:PAR-ID
+#endidentifier 
+ ) 
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+ DISPLAY-TIME()  ;
+ #endstatement   
+  #beginstatement 
+System.out.println( "  > SRLNKTRN-DEL ・・・<  " + TIME-NOW-TXT  ) ;
+ #endstatement   
+  #beginstatement 
+#BEGINSQL
+DELETE 
+ FROM  
+ sr_jlnktrn_rk 
+ rk 
+ WHERE  
+ trn_kb 
+ =  
+ 6 
+ AND  
+ syori_flg 
+ <  
+ 9 
+ AND  
+ EXISTS 
+ (  
+ SELECT 
+ 0 
+ FROM  
+ sr_jlnk_kmk_setup_rk 
+ kk 
+ WHERE  
+ kk 
+ . 
+ srtbl_no 
+ =  
+ rk 
+ . 
+ srtbl_no 
+ AND  
+ kk 
+ . 
+ srfld_id 
+ =  
+ rk 
+ . 
+ srfld_id 
+ AND  
+ rk 
+ . 
+ lnk_date 
+ between 
+ kk 
+ . 
+ sdate 
+ and 
+ kk 
+ . 
+ edate 
+ AND  
+ kk 
+ . 
+ syori_flg 
+ =  
+ 0 
+ )  
+ AND  
+ exists 
+ (  
+ SELECT 
+ 0 
+ FROM  
+ sr_jlnk_syain 
+ js 
+ WHERE  
+ rk 
+ . 
+ sya_id 
+ =  
+ js 
+ . 
+ sya_id 
+ AND  
+ js 
+ . 
+ par_id 
+ =  
+ #beginidentifier
+:PAR-ID
+#endidentifier 
+ ) 
+#ENDSQL 
+;
+ #endstatement   
+  #beginstatement 
+ DISPLAY-TIME()  ;
+ #endstatement   
+  #beginstatement 
+System.out.println( " >> SRLNKTRN-DEL END   << " + TIME-NOW-TXT  ) ;
+ #endstatement   
+}
+
+#endsection 
+ #beginsection
+
+public static void SRLNKTRN-FET()
+{
+ #beginstatement 
+SRLNKTRN-REC ;
+ #endstatement   
+  #beginstatement 
+if ( ( RESTORE-EOF-FLG == 0 ) )  
+{
+	 #beginstatement 
+	#BEGINSQL
+	FETCH 
+	 restoretrnrkcsr 
+	 INTO 
+	 #beginidentifier
+	:SRT-SYA-ID
+	#endidentifier 
+	 #beginidentifier
+	:SRT-SRTBL-NO
+	#endidentifier 
+	 #beginidentifier
+	:SRT-SRFLD-ID
+	#endidentifier 
+	 #beginidentifier
+	:SRT-SRFLD-OVAL
+	#endidentifier 
+	 #beginidentifier
+	:SRT-SRFLD-NVAL
+	#endidentifier 
+	 #beginidentifier
+	:SRT-LNK-DATE
+	#endidentifier 
+	 #beginidentifier
+	:SRT-STATUS
+	#endidentifier 
+	 #beginidentifier
+	:SRT-HR-NO
+	#endidentifier 
+	 #beginidentifier
+	:SRT-HRRK-KB
+	#endidentifier 
+	 #beginidentifier
+	:SRT-TRN-KB
+	#endidentifier 
+	 #beginidentifier
+	:SRT-KNM-SEQ
+	#endidentifier 
+	 #beginidentifier
+	:SRT-ENTRY-KB
+	#endidentifier
+	#ENDSQL 
+	;
+	 #endstatement  
+	  #beginstatement 
+	if ( ( SQLCODE  <>  0 ) )  
+	{
+		 #beginstatement 
+		RESTORE-EOF-FLG  1;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+if ( ( RESTORE-EOF-FLG == 1 ) )  
+{
+	 #beginstatement 
+	if ( ( CNT-KIHON-HR > 0 ) )  
+	{
+		 #beginstatement 
+		 KIHON-HR-UPD()  ;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement  
+	  #beginstatement 
+	#BEGINSQL
+	FETCH 
+	 srjlnktrncsr 
+	 INTO 
+	 #beginidentifier
+	:SRT-SYA-ID
+	#endidentifier 
+	 #beginidentifier
+	:SRT-SRTBL-NO
+	#endidentifier 
+	 #beginidentifier
+	:SRT-SRFLD-ID
+	#endidentifier 
+	 #beginidentifier
+	:SRT-SRFLD-OVAL
+	#endidentifier 
+	 #beginidentifier
+	:SRT-SRFLD-NVAL
+	#endidentifier 
+	 #beginidentifier
+	:SRT-LNK-DATE
+	#endidentifier 
+	 #beginidentifier
+	:SRT-STATUS
+	#endidentifier 
+	 #beginidentifier
+	:SRT-HR-NO
+	#endidentifier 
+	 #beginidentifier
+	:SRT-HRRK-KB
+	#endidentifier 
+	 #beginidentifier
+	:SRT-TRN-KB
+	#endidentifier 
+	 #beginidentifier
+	:SRT-KNM-SEQ
+	#endidentifier 
+	 #beginidentifier
+	:SRT-ENTRY-KB
+	#endidentifier 
+	 #beginidentifier
+	:SRT-LNK-DATE-KB
+	#endidentifier
+	#ENDSQL 
+	;
+	 #endstatement  
+	  #beginstatement 
+	if ( ( SQLCODE  <>  0 ) )  
+	{
+		 #beginstatement 
+		SRT-SYA-ID  9999999999;
+		 #endstatement  
+		  #beginstatement 
+		LNKSYAIN-EOF-FLG  1;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+;
+ #endstatement   
+  #beginstatement 
+if ( ( WK-TRN-CNT == 2000 ) )  
+{
+	 #beginstatement 
+	 DISPLAY-TIME()  ;
+	 #endstatement  
+	  #beginstatement 
+	System.out.println( "    … 処�?�中 …          " + TIME-NOW-TXT  ) ;
+	 #endstatement  
+	  #beginstatement 
+	WK-TRN-CNT  0;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+if ( ( SRT-TRN-KB == 9 ) )  
+{
+	 #beginstatement 
+	KIHON-HR-PTR  CNT-KIHON-HR;
+	 #endstatement  
+	  #beginstatement 
+	while ( ! ( ( ( ( ( KIHON-HR-PTR == 0 ) ) || SRT-SYA-ID  <>  KIHON-HR-SYA-ID ) )  ) )
+	{ 
+		 #beginstatement 
+		if ( ( ( ( SRT-SYA-ID == KIHON-HR-SYA-ID ) ) ) && ( ( ( SRT-HR-NO == KIHON-HR-HR-NO ) ) ) && ( ( ( SRT-HRRK-KB == KIHON-HR-HRRK-KB ) ) ) )  
+		{
+		 
+		}
+		 ;
+		 #endstatement   
+		  #beginstatement 
+		;
+		 #endstatement   ) ;
+	};
+	 #endstatement  
+	  #beginstatement 
+	if ( ( ( ( CNT-KIHON-HR >= KIHON-HR-MAX ) ) ) && ( ( ( SRT-SYA-ID  <>  KIHON-HR-SYA-ID ) ) ) )  
+	{
+		 #beginstatement 
+		 KIHON-HR-UPD()  ;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement  
+	  #beginstatement 
+	;
+	 #endstatement  
+	  #beginstatement 
+	KIHON-HR-SYA-ID  SRT-SYA-ID;
+	 #endstatement  
+	  #beginstatement 
+	KIHON-HR-HR-NO  SRT-HR-NO;
+	 #endstatement  
+	  #beginstatement 
+	KIHON-HR-HRRK-KB  SRT-HRRK-KB;
+	 #endstatement   
+}
+	else {  #beginstatement 
+	if ( ( SRT-TRN-KB <= 1 ) )  
+	{
+		 #beginstatement 
+		DBHR-PTR  CNT-DBHR;
+		 #endstatement  
+		  #beginstatement 
+		while ( ! ( ( ( ( ( DBHR-PTR == 0 ) ) || SRT-SYA-ID  <>  DB-HR-SYA-ID ) )  ) )
+		{ 
+			 #beginstatement 
+			if ( ( ( ( SRT-SYA-ID == DB-HR-SYA-ID ) ) ) && ( ( ( SRT-HR-NO == DB-HR-HR-NO ) ) ) && ( ( ( SRT-HRRK-KB == DB-HR-HRRK-KB ) ) ) )  
+			{
+			 
+			}
+			 ;
+			 #endstatement   
+			  #beginstatement 
+			;
+			 #endstatement   ) ;
+		};
+		 #endstatement  
+		  #beginstatement 
+		if ( ( ( ( CNT-DBHR >= DBHR-MAX ) ) ) && ( ( ( SRT-SYA-ID  <>  DB-HR-SYA-ID ) ) ) )  
+		{
+			 #beginstatement 
+			 DBHR-UPD()  ;
+			 #endstatement   
+		}
+		 ;
+		 #endstatement  
+		  #beginstatement 
+		;
+		 #endstatement  
+		  #beginstatement 
+		DB-HR-SYA-ID  SRT-SYA-ID;
+		 #endstatement  
+		  #beginstatement 
+		DB-HR-HR-NO  SRT-HR-NO;
+		 #endstatement  
+		  #beginstatement 
+		DB-HR-HRRK-KB  SRT-HRRK-KB;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement   } ;
+ #endstatement   
+}
+
+#endsection 
+ #beginsection
+
+public static void SRLNKTRN-SET()
+{
+ #beginstatement 
+if ( ( ( ( SRT-SYA-ID == OLD-SYA-ID ) ) ) && ( ( ( SRT-LNK-DATE == OLD-LNK-DATE ) ) ) && ( ( ( SRT-STATUS == OLD-STATUS ) ) ) && ( ( ( SRT-HR-NO == OLD-HR-NO ) ) ) && ( ( ( SRT-HRRK-KB == OLD-HRRK-KB ) ) ) && ( ( ( ( ( ( ( SRT-TRN-KB < 9 ) ) ) && ( ( ( OLD-TRN-KB < 9 ) ) ) ) || ( ( ( ( SRT-TRN-KB == 9 ) ) ) && ( ( ( OLD-TRN-KB == 9 ) ) ) ) ) ) ) )  
+{
+	 #beginstatement 
+	if ( ( ( ( CNT-LNKTRN == 0 ) ) || ( ( ( ( SRT-SRTBL-NO  <>  WS-SRTBL-NO ) ) || ( ( SRT-SRFLD-ID  <>  WS-SRFLD-ID ) ) || ( ( SRT-KNM-SEQ  <>  WS-KNM-SEQ ) ) ) ) ) )  
+	{
+		 #beginstatement 
+		;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement  
+	  #beginstatement 
+	WS-SRTBL-NO  SRT-SRTBL-NO;
+	 #endstatement  
+	  #beginstatement 
+	WS-SRFLD-ID  SRT-SRFLD-ID;
+	 #endstatement  
+	  #beginstatement 
+	WS-SRFLD-OVAL WS-SRFLD-OVAL-J  SRT-SRFLD-OVAL;
+	 #endstatement  
+	  #beginstatement 
+	WS-SRFLD-NVAL WS-SRFLD-NVAL-J  SRT-SRFLD-NVAL;
+	 #endstatement  
+	  #beginstatement 
+	WS-TRN-KB  SRT-TRN-KB;
+	 #endstatement  
+	  #beginstatement 
+	WS-KNM-SEQ  SRT-KNM-SEQ;
+	 #endstatement  
+	  #beginstatement 
+	WS-LNK-DATE  SRT-LNK-DATE;
+	 #endstatement  
+	  #beginstatement 
+	WS-HR-NO  SRT-HR-NO;
+	 #endstatement  
+	  #beginstatement 
+	WS-HRRK-KB  SRT-HRRK-KB;
+	 #endstatement  
+	  #beginstatement 
+	WS-STATUS  SRT-STATUS;
+	 #endstatement  
+	  #beginstatement 
+	WS-ENTRY-KB  SRT-ENTRY-KB;
+	 #endstatement  
+	  #beginstatement 
+	WS-SYORI-FLG  0;
+	 #endstatement  
+	  #beginstatement 
+	 SRLNKTRN-FET()  ;
+	 #endstatement   
+}
+	else {  #beginstatement 
+	SYA-ID  OLD-SYA-ID;
+	 #endstatement   
+	  #beginstatement 
+	LNK-DATE  OLD-LNK-DATE;
+	 #endstatement   
+	  #beginstatement 
+	HR-NO  OLD-HR-NO;
+	 #endstatement   
+	  #beginstatement 
+	HRRK-KB  OLD-HRRK-KB;
+	 #endstatement   
+	  #beginstatement 
+	WK-STATUS  OLD-STATUS;
+	 #endstatement   
+	  #beginstatement 
+	TRN-KB  OLD-TRN-KB;
+	 #endstatement   
+	  #beginstatement 
+	LNK-DATE-KB  OLD-LNK-DATE-KB;
+	 #endstatement   } ;
+ #endstatement   
+  #beginstatement 
+OLD-SYA-ID  SRT-SYA-ID;
+ #endstatement   
+  #beginstatement 
+OLD-LNK-DATE  SRT-LNK-DATE;
+ #endstatement   
+  #beginstatement 
+OLD-HR-NO  SRT-HR-NO;
+ #endstatement   
+  #beginstatement 
+OLD-HRRK-KB  SRT-HRRK-KB;
+ #endstatement   
+  #beginstatement 
+OLD-STATUS  SRT-STATUS;
+ #endstatement   
+  #beginstatement 
+OLD-TRN-KB  SRT-TRN-KB;
+ #endstatement   
+  #beginstatement 
+OLD-LNK-DATE-KB  SRT-LNK-DATE-KB;
+ #endstatement   
+}
+
+#endsection 
+ #beginsection
+
+public static void SRMST-WRITE()
+{
+ #beginstatement 
+ SRMST-GET()  ;
+ #endstatement   
+  #beginstatement 
+ SRKNM-GET()  ;
+ #endstatement   
+  #beginstatement 
+CP-SRMST-REC ;
+ #endstatement   
+  #beginstatement 
+if ( ( CNT-SRMST == 0 ) )  
+{
+	 #beginstatement 
+	SRM-IDX  1;
+	 #endstatement  
+	  #beginstatement 
+	KNM-IDX  0;
+	 #endstatement  
+	  #beginstatement 
+	CNT-SRMST  1;
+	 #endstatement  
+	  #beginstatement 
+	LNK-EDATE  "2382/12/31";
+	 #endstatement  
+	  #beginstatement 
+	KNM-IDX  1;
+	 #endstatement  
+	  #beginstatement 
+	 SRMST-NEW()  ;
+	 #endstatement  
+	  #beginstatement 
+	while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+	{ 
+		 #beginstatement 
+		 SRKNM-NEW()  ;
+		 #endstatement   
+		  #beginstatement 
+		;
+		 #endstatement   ) ;
+	};
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+SRM-PTR  1;
+ #endstatement   
+  #beginstatement 
+while ( ! ( ( ( SRM-PTR > CNT-SRMST ) )  ) )
+{ 
+	 #beginstatement 
+	if ( ( ( ( ( ( TRN-KB < 9 ) ) ) && ( ( ( SRM-EDATE >= LNK-DATE ) ) ) ) || ( ( SRM-SDATE == LNK-DATE ) ) ) )  
+	{
+		 #beginstatement 
+		CP-SRMST-REC  SRMST;
+		 #endstatement  
+		  #beginstatement 
+		 break(); ;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement   
+	  #beginstatement 
+	;
+	 #endstatement   ) ;
+};
+ #endstatement   
+  #beginstatement 
+if ( ( SRM-STATUS == 0 || TRN-KB == 9 ) )  
+{
+	 #beginstatement 
+	IS-STS0-FLG  1;
+	 #endstatement   
+}
+	else {  #beginstatement 
+	IX6  1;
+	 #endstatement   
+	  #beginstatement 
+	while ( ! ( ( ( IX6 > CNT-SRKNM ) )  ) )
+	{ 
+		 #beginstatement 
+		SRK-IS-STS0-FLG  1;
+		 #endstatement   
+		  #beginstatement 
+		;
+		 #endstatement   ) ;
+	};
+	 #endstatement   } ;
+ #endstatement   
+  #beginstatement 
+if ( ( TRN-KB < 9 ) )  
+{
+	 #beginstatement 
+	;
+	 #endstatement  
+	  #beginstatement 
+	while ( ! ( ( ( SRM-PTR2 > CNT-SRMST || SRM-SDATE > LNK-DATE ) )  ) )
+	{ 
+		 #beginstatement 
+		;
+		 #endstatement   ) ;
+	};
+	 #endstatement  
+	  #beginstatement 
+	;
+	 #endstatement  
+	  #beginstatement 
+	if ( ( SRM-PTR < SRM-PTR2 ) )  
+	{
+		 #beginstatement 
+		IX6  1;
+		 #endstatement  
+		  #beginstatement 
+		while ( ! ( ( ( IX6 > CNT-SRKNM ) )  ) )
+		{ 
+			 #beginstatement 
+			IX7  1;
+			 #endstatement   
+			  #beginstatement 
+			while ( ! ( ( ( IX7 > CNT-SRKNM ) )  ) )
+			{ 
+				 #beginstatement 
+				if ( ( SRK-KNM-SEQ == SRK-KNM-SEQ ) )  
+				{
+					 #beginstatement 
+					 break(); ;
+					 #endstatement   
+				}
+				 ;
+				 #endstatement   
+				  #beginstatement 
+				;
+				 #endstatement   ) ;
+			};
+			 #endstatement   
+			  #beginstatement 
+			if ( ( IX7 > CNT-SRKNM ) )  
+			{
+				 #beginstatement 
+				;
+				 #endstatement  
+				  #beginstatement 
+				SRKNM  SRKNM;
+				 #endstatement  
+				  #beginstatement 
+				SRK-IS-STS0-FLG  1;
+				 #endstatement   
+			}
+			 ;
+			 #endstatement   
+			  #beginstatement 
+			;
+			 #endstatement   ) ;
+		};
+		 #endstatement  
+		  #beginstatement 
+		CP-SRMST-REC  SRMST;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+SRM-EQUAL-DATE  0;
+ #endstatement   
+  #beginstatement 
+if ( ( SRM-SDATE > LNK-DATE ) )  
+{
+	 #beginstatement 
+	IX4  CNT-SRMST;
+	 #endstatement  
+	  #beginstatement 
+	while ( ! ( ( ( IX4 < 1 ) )  ) )
+	{ 
+		 #beginstatement 
+		;
+		 #endstatement   
+		  #beginstatement 
+		SRMST  SRMST;
+		 #endstatement   
+		  #beginstatement 
+		;
+		 #endstatement   ) ;
+	};
+	 #endstatement  
+	  #beginstatement 
+	;
+	 #endstatement  
+	  #beginstatement 
+	SRMST ;
+	 #endstatement  
+	  #beginstatement 
+	CP-SRMST-REC  SRMST;
+	 #endstatement  
+	  #beginstatement 
+	SRM-IDX KNM-IDX  1;
+	 #endstatement  
+	  #beginstatement 
+	 SRMST-SET-VALUE()  ;
+	 #endstatement  
+	  #beginstatement 
+	WK-ADD-DAYS  1;
+	 #endstatement  
+	  #beginstatement 
+	WK-DATE  SRM-SDATE;
+	 #endstatement  
+	  #beginstatement 
+	 ADD-XDAYS()  ;
+	 #endstatement  
+	  #beginstatement 
+	LNK-EDATE  WK-DATE;
+	 #endstatement  
+	  #beginstatement 
+	 SRMST-NEW()  ;
+	 #endstatement  
+	  #beginstatement 
+	 SRKNM-NEW()  ;
+	 #endstatement  
+	  #beginstatement 
+	SRM-PTR  2;
+	 #endstatement   
+}
+ ;
+ #endstatement   
+  #beginstatement 
+SRM-IDX  SRM-PTR;
+ #endstatement   
+  #beginstatement 
+while ( ! ( ( ( SRM-IDX > CNT-SRMST ) )  ) )
+{ 
+	 #beginstatement 
+	KNM-IDX  0;
+	 #endstatement   
+	  #beginstatement 
+	while ( ! ( ( ( KNM-IDX >= CNT-SRKNM ) )  ) )
+	{ 
+		 #beginstatement 
+		;
+		 #endstatement   
+		  #beginstatement 
+		WK-IDX  SRM-IDX;
+		 #endstatement   
+		  #beginstatement 
+		while ( ! ( ( ( WK-IDX <= 0 ) )  ) )
+		{ 
+			 #beginstatement 
+			if ( ( SRM-SDATE < SRM-SDATE ) && ( SRM-STATUS == 0 ) )  
+			{
+				 #beginstatement 
+				 break(); ;
+				 #endstatement   
+			}
+			 ;
+			 #endstatement   
+			  #beginstatement 
+			;
+			 #endstatement   ) ;
+		};
+		 #endstatement   
+		  #beginstatement 
+		if ( ( SRM-SDATE == LNK-DATE ) )  
+		{
+			 #beginstatement 
+			SRM-EQUAL-DATE  1;
+			 #endstatement  
+			  #beginstatement 
+			;
+			 #endstatement  
+			  #beginstatement 
+			if ( ( ( ( WK-IDX2 <= CNT-SRMST ) ) ) && ( ( ( WK-STATUS == 1 ) ) ) )  
+			{
+				 #beginstatement 
+				if ( ( SRM-SDATE == SRM-SDATE ) )  
+				{
+					 #beginstatement 
+					CP-SRMST-REC  SRMST;
+					 #endstatement  
+					  #beginstatement 
+					 break(); ;
+					 #endstatement   
+				}
+				 ;
+				 #endstatement   
+			}
+			 ;
+			 #endstatement   
+		}
+		 ;
+		 #endstatement   
+		  #beginstatement 
+		if ( ( ( ( WK-STATUS == 1 ) ) ) && ( ( ( SRM-STATUS == 0 ) ) ) && ( ( ( SRM-SDATE < LNK-DATE ) ) ) )  
+		{
+			 #beginstatement 
+			;
+			 #endstatement  
+			  #beginstatement 
+			while ( ! ( ( ( WK-IDX2 > CNT-SRMST ) )  ) )
+			{ 
+				 #beginstatement 
+				if ( ( ( ( SRM-STATUS == 1 ) ) ) && ( ( ( SRM-SDATE == LNK-DATE ) ) ) )  
+				{
+					 #beginstatement 
+					CP-SRMST-REC  SRMST;
+					 #endstatement  
+					  #beginstatement 
+					 break(); ;
+					 #endstatement   
+				}
+				 ;
+				 #endstatement   
+				  #beginstatement 
+				;
+				 #endstatement   ) ;
+			};
+			 #endstatement  
+			  #beginstatement 
+			if ( ( WK-IDX2 <= CNT-SRMST ) )  
+			{
+				 #beginstatement 
+				 break(); ;
+				 #endstatement   
+			}
+			 ;
+			 #endstatement   
+		}
+		 ;
+		 #endstatement   
+		  #beginstatement 
+		if ( ( ( ( WK-STATUS == 1 ) ) ) && ( ( ( SRM-STATUS == 1 ) ) ) && ( ( ( SRM-SDATE  <>  LNK-DATE ) ) ) )  
+		{
+			 #beginstatement 
+			 break(); ;
+			 #endstatement   
+		}
+		 ;
+		 #endstatement   
+		  #beginstatement 
+		;
+		 #endstatement   
+		  #beginstatement 
+		while ( ! ( ( ( WK-IDX2 <= 0 ) )  ) )
+		{ 
+			 #beginstatement 
+			if ( ( SRM-STATUS == 0 ) )  
+			{
+				 #beginstatement 
+				 break(); ;
+				 #endstatement   
+			}
+			 ;
+			 #endstatement   
+			  #beginstatement 
+			;
+			 #endstatement   ) ;
+		};
+		 #endstatement   
+		  #beginstatement 
+		if ( ( ( ( SRM-SDATE < LNK-DATE ) ) ) && ( ( ( SRM-IDX > SRM-PTR ) ) ) && ( ( ( WK-STATUS == 1 ) ) ) )  
+		{
+			 #beginstatement 
+			CP-SRMST-REC  SRMST;
+			 #endstatement   
+		}
+		 ;
+		 #endstatement   
+		  #beginstatement 
+		if ( ( ( ( WK-STATUS == 1 ) ) ) && ( ( ( SRM-SDATE > LNK-DATE ) ) ) && ( ( ( IS-STS0-FLG == 1 ) ) ) )  
+		{
+			 #beginstatement 
+			 break(); ;
+			 #endstatement   
+		}
+		 ;
+		 #endstatement   
+		  #beginstatement 
+		SAME-DATA-FLG  0;
+		 #endstatement   
+		  #beginstatement 
+		if ( ( TRN-KB < 9 ) )  
+		{
+			 #beginstatement 
+			 SRMST-SET-VALUE()  ;
+			 #endstatement  
+			  #beginstatement 
+			if ( ( ( ( CNT-SRKNM == KNM-IDX || CNT-SRKNM == 0 ) ) ) && ( WK-IDX2 > 0 ) && ( SRM-STATUS == 1 ) )  
+			{
+				 #beginstatement 
+				SRMST-COMPARE-REC ;
+				 #endstatement  
+				  #beginstatement 
+				SRMST-COMPARE  SRMST;
+				 #endstatement  
+				  #beginstatement 
+				SRMST-COMPARE  SRMST;
+				 #endstatement  
+				  #beginstatement 
+				while ( ! ( IX ) )
+				{ 
+					 #beginstatement 
+					COM-SRK-STATUS COM-SRK-STATUS COM-SRK-INSERT-FLG COM-SRK-INSERT-FLG COM-INSERT-FLG COM-INSERT-FLG COM-IS-STS0-FLG COM-IS-STS0-FLG  0;
+					 #endstatement   ) ;
+				};
+				 #endstatement  
+				  #beginstatement 
+				if ( ( COM-SONOTA == COM-SONOTA ) )  
+				{
+					 #beginstatement 
+					 SRMST-MERGE()  ;
+					 #endstatement   
+				}
+				 ;
+				 #endstatement   
+			}
+			 ;
+			 #endstatement   
+		}
+			else {  #beginstatement 
+			if ( ( SRM-EQUAL-DATE == 1 ) )  
+			{
+				 #beginstatement 
+				 SRMST-SET-DEL()  ;
+				 #endstatement  
+				  #beginstatement 
+				if ( ( CNT-SRKNM >= KNM-IDX ) && ( SRK-K-SR-SYZ-CD == SPACE ) && ( SRK-K-GENERAL-CD01 == SPACE ) && ( SRK-K-GENERAL-CD02 == SPACE ) && ( SRK-K-GENERAL-CD03 == SPACE ) && ( SRK-K-GENERAL-CD04 == SPACE ) && ( SRK-K-GENERAL-CD05 == SPACE ) && ( SRK-K-GENERAL-CD06 == SPACE ) && ( SRK-K-GENERAL-CD07 == SPACE ) && ( SRK-K-GENERAL-CD08 == SPACE ) && ( SRK-K-GENERAL-CD09 == SPACE ) && ( SRK-K-GENERAL-CD10 == SPACE ) && ( ( ( ( ( SRM-STATUS == WK-STATUS ) ) || ( ( WK-STATUS == 0 ) ) ) ) ) )  
+				{
+					 #beginstatement 
+					TGT-STATUS  SRM-STATUS;
+					 #endstatement  
+					  #beginstatement 
+					 SRKNM-DEL()  ;
+					 #endstatement  
+					  #beginstatement 
+					IX8  KNM-IDX;
+					 #endstatement  
+					  #beginstatement 
+					while ( ! ( ( ( IX8 == CNT-SRKNM ) )  ) )
+					{ 
+						 #beginstatement 
+						;
+						 #endstatement   
+						  #beginstatement 
+						SRKNM  SRKNM;
+						 #endstatement   
+						  #beginstatement 
+						CSRKNM  CSRKNM;
+						 #endstatement   
+						  #beginstatement 
+						;
+						 #endstatement   ) ;
+					};
+					 #endstatement  
+					  #beginstatement 
+					SRKNM ;
+					 #endstatement  
+					  #beginstatement 
+					;
+					 #endstatement  
+					  #beginstatement 
+					;
+					 #endstatement   
+				}
+				 ;
+				 #endstatement  
+				  #beginstatement 
+				if ( ( ( ( CNT-SRKNM == KNM-IDX || CNT-SRKNM == 0 ) ) ) && ( WK-IDX2 > 0 ) )  
+				{
+					 #beginstatement 
+					SRMST-COMPARE-REC ;
+					 #endstatement  
+					  #beginstatement 
+					SRMST-COMPARE  SRMST;
+					 #endstatement  
+					  #beginstatement 
+					SRMST-COMPARE  SRMST;
+					 #endstatement  
+					  #beginstatement 
+					while ( ! ( IX ) )
+					{ 
+						 #beginstatement 
+						COM-SRK-STATUS COM-SRK-STATUS COM-SRK-INSERT-FLG COM-SRK-INSERT-FLG COM-INSERT-FLG COM-INSERT-FLG COM-IS-STS0-FLG COM-IS-STS0-FLG  0;
+						 #endstatement   ) ;
+					};
+					 #endstatement  
+					  #beginstatement 
+					if ( ( COM-SONOTA == COM-SONOTA ) )  
+					{
+						 #beginstatement 
+						 SRMST-MERGE()  ;
+						 #endstatement   
+					}
+					 ;
+					 #endstatement   
+				}
+				 ;
+				 #endstatement   
+			}
+			 ;
+			 #endstatement   } ;
+		 #endstatement   ) ;
+	};
+	 #endstatement   
+	  #beginstatement 
+	SRMST-COMPARE-REC ;
+	 #endstatement   
+	  #beginstatement 
+	SRMST-COMPARE  CP-SRMST-REC;
+	 #endstatement   
+	  #beginstatement 
+	SRMST-COMPARE  SRMST;
+	 #endstatement   
+	  #beginstatement 
+	while ( ! ( IX ) )
+	{ 
+		 #beginstatement 
+		COM-SRK-STATUS COM-SRK-STATUS COM-SRK-INSERT-FLG COM-SRK-INSERT-FLG COM-INSERT-FLG COM-INSERT-FLG COM-IS-STS0-FLG COM-IS-STS0-FLG  0;
+		 #endstatement   ) ;
+	};
+	 #endstatement   
+	  #beginstatement 
+	if ( ( COM-SONOTA == COM-SONOTA ) )  
+	{
+		 #beginstatement 
+		SAME-DATA-FLG  1;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement   
+	  #beginstatement 
+	if ( ( SAME-DATA-FLG == 0 ) )  
+	{
+		 #beginstatement 
+		if ( ( ( ( SRM-SDATE < LNK-DATE ) ) ) )  
+		{
+			 #beginstatement 
+			if ( ( WK-STATUS == 1 ) )  
+			{
+				 #beginstatement 
+				if ( ( ( ( SRM-IDX >= CNT-SRMST ) ) ) )  
+				{
+					 #beginstatement 
+					if ( ( ( ( SRM-STATUS == 0 ) ) || ( ( IS-STS0-FLG == 0 ) ) ) )  
+					{
+						 #beginstatement 
+						 SRMST-INS()  ;
+						 #endstatement   
+					}
+					 ;
+					 #endstatement  
+					  #beginstatement 
+					KNM-IDX  1;
+					 #endstatement  
+					  #beginstatement 
+					while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+					{ 
+						 #beginstatement 
+						if ( ( ( ( SRK-STATUS == 0 ) ) || ( ( SRK-IS-STS0-FLG == 1 ) ) ) )  
+						{
+							 #beginstatement 
+							 SRKNM-INS()  ;
+							 #endstatement   
+						}
+						 ;
+						 #endstatement   
+						  #beginstatement 
+						;
+						 #endstatement   ) ;
+					};
+					 #endstatement   
+				}
+					else {  #beginstatement 
+					while ( ! ( WK-SRM-IDX ) )
+					{ 
+						 #beginstatement 
+						if ( ( SRM-SDATE == LNK-DATE ) )  
+						{
+							 #beginstatement 
+							 break(); ;
+							 #endstatement   
+						}
+						 ;
+						 #endstatement   ) ;
+					};
+					 #endstatement   
+					  #beginstatement 
+					if ( ( WK-SRM-IDX > CNT-SRMST ) )  
+					{
+						 #beginstatement 
+						if ( ( ( ( SRM-STATUS == 0 ) ) || ( ( IS-STS0-FLG == 0 ) ) ) )  
+						{
+							 #beginstatement 
+							 SRMST-INS()  ;
+							 #endstatement   
+						}
+						 ;
+						 #endstatement  
+						  #beginstatement 
+						KNM-IDX  1;
+						 #endstatement  
+						  #beginstatement 
+						while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+						{ 
+							 #beginstatement 
+							if ( ( ( ( SRK-STATUS == 0 ) ) || ( ( SRK-IS-STS0-FLG == 1 ) ) ) )  
+							{
+								 #beginstatement 
+								 SRKNM-INS()  ;
+								 #endstatement   
+							}
+							 ;
+							 #endstatement   
+							  #beginstatement 
+							;
+							 #endstatement   ) ;
+						};
+						 #endstatement   
+					}
+					 ;
+					 #endstatement   } ;
+				 #endstatement   
+			}
+				else {  #beginstatement 
+				if ( ( SRM-STATUS == 0 ) )  
+				{
+					 #beginstatement 
+					 SRMST-INS()  ;
+					 #endstatement  
+					  #beginstatement 
+					KNM-IDX  1;
+					 #endstatement  
+					  #beginstatement 
+					while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+					{ 
+						 #beginstatement 
+						 SRKNM-INS()  ;
+						 #endstatement   
+						  #beginstatement 
+						;
+						 #endstatement   ) ;
+					};
+					 #endstatement   
+				}
+					else {  #beginstatement 
+					if ( ( IS-STS0-FLG == 0 ) )  
+					{
+						 #beginstatement 
+						 SRMST-INS()  ;
+						 #endstatement  
+						  #beginstatement 
+						IS-STS0-FLG  1;
+						 #endstatement   
+					}
+					 ;
+					 #endstatement   
+					  #beginstatement 
+					KNM-IDX  1;
+					 #endstatement   
+					  #beginstatement 
+					while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+					{ 
+						 #beginstatement 
+						if ( ( ( ( SRK-IS-STS0-FLG == 1 ) ) ) )  
+						{
+							 #beginstatement 
+							 SRKNM-INS()  ;
+							 #endstatement  
+							  #beginstatement 
+							SRK-IS-STS0-FLG  0;
+							 #endstatement   
+						}
+						 ;
+						 #endstatement   
+						  #beginstatement 
+						;
+						 #endstatement   ) ;
+					};
+					 #endstatement   } ;
+				 #endstatement   } ;
+			 #endstatement   
+		}
+			else {  #beginstatement 
+			if ( ( ( ( SRM-SDATE == LNK-DATE ) ) ) )  
+			{
+				 #beginstatement 
+				if ( ( WK-STATUS == 1 ) )  
+				{
+					 #beginstatement 
+					if ( ( SRM-STATUS == 0 ) )  
+					{
+						 #beginstatement 
+						if ( ( ( ( SRM-IDX >= CNT-SRMST ) ) || ( ( SRM-SDATE > LNK-DATE ) ) ) )  
+						{
+							 #beginstatement 
+							 SRMST-INS()  ;
+							 #endstatement  
+							  #beginstatement 
+							KNM-IDX  1;
+							 #endstatement  
+							  #beginstatement 
+							while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+							{ 
+								 #beginstatement 
+								 SRKNM-INS()  ;
+								 #endstatement   
+								  #beginstatement 
+								;
+								 #endstatement   ) ;
+							};
+							 #endstatement   
+						}
+						 ;
+						 #endstatement   
+					}
+						else {  #beginstatement 
+						TGT-STATUS  SRM-STATUS;
+						 #endstatement   
+						  #beginstatement 
+						 SRMST-UPD()  ;
+						 #endstatement   
+						  #beginstatement 
+						KNM-IDX  1;
+						 #endstatement   
+						  #beginstatement 
+						while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+						{ 
+							 #beginstatement 
+							 SRKNM-UPD()  ;
+							 #endstatement   
+							  #beginstatement 
+							;
+							 #endstatement   ) ;
+						};
+						 #endstatement   } ;
+					 #endstatement   
+				}
+					else {  #beginstatement 
+					if ( ( SRM-STATUS == 0 ) )  
+					{
+						 #beginstatement 
+						TGT-STATUS  SRM-STATUS;
+						 #endstatement  
+						  #beginstatement 
+						 SRMST-UPD()  ;
+						 #endstatement  
+						  #beginstatement 
+						KNM-IDX  1;
+						 #endstatement  
+						  #beginstatement 
+						while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+						{ 
+							 #beginstatement 
+							 SRKNM-UPD()  ;
+							 #endstatement   
+							  #beginstatement 
+							;
+							 #endstatement   ) ;
+						};
+						 #endstatement   
+					}
+						else {  #beginstatement 
+						if ( ( IS-STS0-FLG == 0 ) )  
+						{
+							 #beginstatement 
+							 SRMST-INS()  ;
+							 #endstatement  
+							  #beginstatement 
+							IS-STS0-FLG  1;
+							 #endstatement   
+						}
+						 ;
+						 #endstatement   
+						  #beginstatement 
+						KNM-IDX  1;
+						 #endstatement   
+						  #beginstatement 
+						while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+						{ 
+							 #beginstatement 
+							if ( ( ( ( SRK-IS-STS0-FLG == 1 ) ) ) )  
+							{
+								 #beginstatement 
+								 SRKNM-INS()  ;
+								 #endstatement  
+								  #beginstatement 
+								SRK-IS-STS0-FLG  0;
+								 #endstatement   
+							}
+							 ;
+							 #endstatement   
+							  #beginstatement 
+							;
+							 #endstatement   ) ;
+						};
+						 #endstatement   
+						  #beginstatement 
+						TGT-STATUS  SRM-STATUS;
+						 #endstatement   
+						  #beginstatement 
+						 SRMST-UPD()  ;
+						 #endstatement   
+						  #beginstatement 
+						KNM-IDX  1;
+						 #endstatement   
+						  #beginstatement 
+						while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+						{ 
+							 #beginstatement 
+							 SRKNM-UPD()  ;
+							 #endstatement   
+							  #beginstatement 
+							;
+							 #endstatement   ) ;
+						};
+						 #endstatement   } ;
+					 #endstatement   } ;
+				 #endstatement   
+			}
+				else {  #beginstatement 
+				if ( ( ( ( SRM-SDATE > LNK-DATE ) ) ) )  
+				{
+					 #beginstatement 
+					TGT-STATUS  SRM-STATUS;
+					 #endstatement  
+					  #beginstatement 
+					 SRMST-UPD()  ;
+					 #endstatement  
+					  #beginstatement 
+					KNM-IDX  1;
+					 #endstatement  
+					  #beginstatement 
+					while ( ! ( ( ( KNM-IDX > CNT-SRKNM ) )  ) )
+					{ 
+						 #beginstatement 
+						 SRKNM-UPD()  ;
+						 #endstatement   
+						  #beginstatement 
+						;
+						 #endstatement   ) ;
+					};
+					 #endstatement   
+				}
+				 ;
+				 #endstatement   } ;
+			 #endstatement   } ;
+		 #endstatement   
+	}
+	 ;
+	 #endstatement   
+	  #beginstatement 
+	;
+	 #endstatement   ) ;
+};
+ #endstatement   
+}
+
+#endsection 

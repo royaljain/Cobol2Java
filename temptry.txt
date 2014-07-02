@@ -1,0 +1,1167 @@
+      ****************************************************************
+      * Copyright WorksApplications 2001.      All Rights Reserved.  *
+      * COMPANY shuro system                                         *
+      * ??????? (SRJLNK002)                                   *
+      * ------------------------------------------------------------ *
+      * ??????  :  ??????? (Ver3.3)                    *
+      * ??????  :  ?????????                         *
+      * ?????1  :  DB?                                     *
+      *           2  :  ?????                                 *
+      *           3  :  ????                                   *
+      *           4  :  ??????JOB-ID                   *
+100331*           5  :  ??????                               *
+110601*           6  :  ??????????                       *
+      *           7  :  ?????????                         *
+      ****************************************************************
+      * <<????>>
+      *
+      * Ver ????   ???    ????
+      * --- -------- ----------  --------------------------------
+      * V14          2004/10/29  ??????(V1.4)
+      * V16  041224  2004/12/24  ?kinmu_cal_cd??????
+      *      060206  2006/02/06  ???????????????????
+      *                          trn???????????No??????
+      *      060222  2006/02/22  trn_rk??????????·SQL???
+      *      060524  2006/05/24  ?????·????
+      *      060725  2006/07/25  prc_date???????
+      *      060728  2006/07/28  sr_jlnktrn_rk??SQL??
+      *                          ????????????????????
+      *                          (trg_kb?-1?????????????)
+      *      070228  2007/02/28  sr_jlnkhr_no??SQL??
+      * V175 070305  2007/03/05  ?????????????(entry_kb)
+      *      070306  2007/03/06  ?1899/01/01?1899/12/31
+      *      070308  2007/03/08  ????????
+      *      070309  2007/03/09  ?sr_jlnktrn_rk??SQL??
+      *      070815  2007/08/15  ?????OCCURS??(100?1000)
+      *      070817  2007/08/17  sr_jlnkhr_no?status?????????
+      *              2008/04/15  ???????(1100?1500)
+      *      070830  2007/08/30  ?????????
+      *      071004  2007/10/04  sr_jlnkhr_no????????????
+      * V176 080215  2008/02/15  ?????trg_kb????1????????
+      *      080225  2008/02/25  PTF???????????
+      *      080402  2008/04/02  ????????????????
+      *      090501  2009/05/01  T26114)24?????
+      *      090525  2009/05/25  T25680)sr_kihonmst?hr_no???
+      *      090526  2009/05/26  T26115)?jlnk_sts??????003????
+      *                                 jlnkhr_no?status,?jlnk_sts??????
+      *      090604  2009/06/04  T26115)?????????SQL???
+      *      090831  2009/08/31  T28831)restore_flg??SQL??trn_kb??????
+      * V20          2006/09/--  ??????(V2.0)
+      *      071002  2007/10/02  SR_KIHON_KENM??????????????
+      *      071017  2007/10/17  ???????·SR_KIHON_KENM?????
+      *      071029  2007/10/29  SR_KIHON_KENM?????
+      * V201 071110  2007/11/10  ?????
+      *      080124  2008/01/24  ????????30?100???
+      *      080225  2008/02/25  restore_flg??????
+      *      080304  2008/03/04  ???
+      * V202 080331  2008/03/31  ???0????????????????
+      *      080501  2008/05/01  ??)end_status?0?1?????????
+      *                          ?????????
+      *      080604  2008/06/04  DUMMY???????????????
+      *      080612  2008/06/12  1899/12/31~?????????????
+      * V209 080929  2008/09/29  ????????????·?????????
+      *      081008  2008/10/08  kihonmst?kihon_kenm???????????
+      *      090414  2009/04/14  kihon_kenm?????????
+      *      090421  2009/04/21  T26731)kenm??????????
+      *      090422  2009/04/22  T19199)???·?????????????
+      *      090507  2009/05/07  T26729)trg_kb?null???
+      *      090604  2009/06/04  1899??????·?????null????
+      *      090605  2009/06/05  DISPLAY?????
+      *      090701  2009/07/01  T27670)?????sr_jlnkhr_no?sr_hrinfo
+      * V212 081113  2008/11/13  MLTCPNY_CD??
+      *      090113  2009/01/13  MLTCPNY_CD?NULL????DEFAULT???
+      * V219 100512  2010/05/12  A33998)?????????????????
+      *      100825  2010/08/25  T36124)INS?DEL?????(HR?JINJI)??
+      *      101016  2010/10/16  T37421)???????????????????
+      * V222 091028  2009/10/28  A30588)sr_jlnk_rk???????????
+      *      091029  2009/10/29  A30588)sr_jlnkhr_no??????????
+      *      091030  2009/10/30  A30588)sr_jlnk_kmk_setup_rk?delete??
+      *      091124  2009/11/24  A30589)TRN_RK,HR_NO?SQL???
+      * V223 100331  2010/03/31  A32698)??????
+      *      101211  2010/12/11  T38472)?????(trn_rk?select?order??)
+      * V229 110622  2011/06/22  T41867)??·?????????????
+      *      111016  2011/10/16  T41219)???????????????????
+      *      111017  2011/10/17  T41221)?????????????(??????)
+      *      120612  2012/06/12  T47802)???????????????????
+      *                          T47729)sts=1???sts=1???????????
+      *      130514  2013/05/14  T42426)sr_kihonmst_del????????????
+      * V23  101124  2010/11/24  A34343)ik_kinz_kdt,ikkoj_mt,ikkoj_dt??
+      * V232 110601  2011/06/01  ????????
+      * V239 130301  2013/03/01  T50156)??????????????
+      *      130603  2013/06/03  T52283)???????????
+      *      130918  2013/09/18  T53369)??????????????
+      *      131015  2013/10/15  T53370)SR_KIHON_KENM????????
+      *      131204  2013/12/04  T53706)????????????
+      *                                 trn_rk.act_lnk_date??????
+      *      131017  2013/10/17  T53707)????????????
+      ****************************************************************
+       IDENTIFICATION              DIVISION.
+       PROGRAM-ID.                 SRJLNK002.
+       AUTHOR.                     WORKS.
+      ****************************************************************
+       ENVIRONMENT                 DIVISION.
+       CONFIGURATION               SECTION.
+           SOURCE-COMPUTER.        YHP
+      *                           WITH DEBUGGING MODE
+                                   .
+           OBJECT-COMPUTER.        YHP.
+      * SPECIAL-NAMES.             CONSOLE IS CRT.
+      ****************************************************************
+       DATA                        DIVISION.
+      *---------------------------------------------------------------
+       WORKING-STORAGE SECTION.
+           EXEC  SQL  INCLUDE SQLCA          END-EXEC.
+           EXEC  SQL  BEGIN DECLARE SECTION  END-EXEC.
+      *
+130603 01  SQL-PAR             PIC  X(1200).
+      *
+       01  PRM-LIST.
+           03  DBNAME          PIC  X(050).
+           03  FILL            PIC  X(001)         VALUE X"00".
+           03  MENU-ID         PIC  X(032)         VALUE SPACE.
+           03  PGMNAME         PIC  X(009)         VALUE "srjlnk002".
+           03  JOB-ID          PIC  X(032)         VALUE SPACE.
+100331     03  PAR-ID          PIC S9(003)  COMP-3 VALUE 0.
+           03  SYA-ID          PIC S9(010)  COMP-3 VALUE 0.
+           03  LNK-DATE        PIC  X(025)         VALUE SPACE.
+           03  HR-NO           PIC S9(010)  COMP-3 VALUE 0.
+070308     03  HRRK-KB         PIC S9(003)  COMP-3 VALUE 0.
+           03  HR-NO-WK        PIC S9(010)  COMP-3 VALUE 0.
+070308     03  HRRK-KB-WK      PIC S9(001)  COMP-3 VALUE 0.
+060524     03  TRN-KB          PIC S9(001)  COMP-3 VALUE 0.
+130603     03  LNK-DATE-KB     PIC S9(001)  COMP-3 VALUE 0.
+060524     03  MERGE-SDATE     PIC  X(025).
+060524     03  MERGE-EDATE     PIC  X(025).
+131017     03  MERGED-EDATE    PIC  X(025).
+060524     03  MERGE-STATUS    PIC S9(001)  COMP-3.
+060524     03  LNK-EDATE       PIC  X(010)         VALUE SPACE.
+      *
+100331* SUBCOM? SQL AREA                                            *
+100331 01  SUBCOM-SQL-AREA.
+100331     03  SUBCOM-SQL              PIC  X(0150)      VALUE SPACE.
+100331     03  SUBCOM-SQL-SIZE         PIC S9(0009) COMP VALUE 150.
+100331     03  SUBCOM-SQL-FC           PIC S9(0009) COMP VALUE ZERO.
+
+      *---------------------------------------------------------------
+      * ????
+      *---------------------------------------------------------------
+       01  DATE-NOW-TXT.
+           03  NOW-YY          PIC  X(004).
+           03  FILL            PIC  X(001)  VALUE "/".
+           03  NOW-MM          PIC  X(002).
+           03  FILL            PIC  X(001)  VALUE "/".
+           03  NOW-DD          PIC  X(002).
+           03  FILL            PIC  X(002)  VALUE " ".
+           03  TIME-NOW-TXT.
+               05  NOW-HH      PIC  X(002).
+               05  FILL        PIC  X(002)  VALUE ":".
+               05  NOW-FF      PIC  X(002).
+               05  FILL        PIC  X(002)  VALUE ":".
+               05  NOW-SS      PIC  X(002).
+       01  SRK-LNK-DATE        PIC  X(010).
+       01  SRK-LNK-EDATE       PIC  X(010).
+090501 01  WK-PRC-DATE         PIC  X(025).
+090526 01  WK-FUTURE-DATE      PIC  X(025).
+090526 01  WK-PAST-DATE        PIC  X(025).
+      *---------------------------------------------------------------
+      *  ???????????????
+      *---------------------------------------------------------------
+       01  SRJLNKCTRL-REC.
+           03  PAST-LNK-KB         PIC S9(001)  COMP-3.
+           03  FUTURE-LNK-KB       PIC S9(001)  COMP-3.
+           03  PAST-SUSPEND-DAYS   PIC S9(003)  COMP-3.
+           03  FUTURE-SUSPEND-DAYS PIC S9(003)  COMP-3.
+060524     03  LNK-RESTORE         PIC S9(003)  COMP-3.
+      *---------------------------------------------------------------
+      *  ?????????????
+      *---------------------------------------------------------------
+       01  SRLNKTRN-REC.
+           03  SRT-SYA-ID          PIC S9(010)      COMP-3.
+           03  SRT-SRTBL-NO        PIC S9(010)      COMP-3.
+           03  SRT-SRFLD-ID        PIC  X(032).
+           03  SRT-SRFLD-OVAL      PIC  X(030).
+           03  SRT-SRFLD-NVAL      PIC  X(030).
+           03  SRT-LNK-DATE        PIC  X(025).
+           03  SRT-STATUS          PIC S9(001)      COMP-3.
+           03  SRT-HR-NO           PIC S9(010)      COMP-3.
+070308     03  SRT-HRRK-KB         PIC S9(003)      COMP-3.
+           03  SRT-TRN-KB          PIC S9(001)      COMP-3.
+           03  SRT-KNM-SEQ         PIC S9(010)       COMP-3.
+060222     03  SRT-ENTRY-KB        PIC S9(001)      COMP-3.
+130603     03  SRT-LNK-DATE-KB     PIC S9(001)      COMP-3.
+      *---------------------------------------------------------------
+      *  ???????
+      *---------------------------------------------------------------
+       01  SRMST-MAX                     PIC S9(007)  COMP-3 VALUE 1000.
+       01  SRKNM-MAX                     PIC S9(007)  COMP-3 VALUE  30.
+       01  WK-STATUS                     PIC S9(003)       COMP-3.
+       01  TGT-STATUS                    PIC S9(003)       COMP-3.
+       01  SRMST-REC.
+           03  CNT-SRMST                 PIC S9(007)  COMP-3.
+           03  SRMST OCCURS 1000 TIMES.
+               05  SRM-SYA-ID            PIC S9(010)       COMP-3.
+               05  SRM-SDATE             PIC  X(025).
+               05  SRM-EDATE             PIC  X(025).
+               05  SRM-HR-NO             PIC S9(010)       COMP-3.
+070308         05  SRM-HRRK-KB           PIC S9(001)       COMP-3.
+               05  SRM-STATUS            PIC S9(003)       COMP-3.
+               05  SRM-TRG-KB            PIC S9(003)       COMP-3.
+               05  SRM-SR-SYZ-CD         PIC  X(014).
+               05  SRM-SYZ-PRC-DATE      PIC  X(025).
+               05  SRM-SYZ-HAT-DATE      PIC  X(025).
+               05  SRM-CHAKUNIN-DATE     PIC  X(025).
+               05  SRM-KINMU-SYUBETU-CD  PIC  X(010).
+               05  SRM-KS-PRC-DATE       PIC  X(025).
+               05  SRM-KYUMU-SYUBETU-CD  PIC  X(010).
+               05  SRM-JITAN-KINMU-KB    PIC S9(001)       COMP-3.
+               05  SRM-JITAN-KINMU-CD    PIC  X(010).
+               05  SRM-JITAN-SYUBETU-CD  PIC  X(010).
+               05  SRM-SIME-CD           PIC  X(010).
+               05  SRM-CAL-CD            PIC  X(010).
+041224         05  SRM-KINMU-CAL-CD      PIC  X(020).
+               05  SRM-HOLIDAY-TYPE-CD   PIC  X(010).
+               05  SRM-HT-PRC-DATE       PIC  X(025).
+               05  SRM-SAGYO-KEITAI-KB   PIC S9(003)       COMP-3.
+               05  SRM-SAGYO-KEITAI-CD   PIC  X(010).
+               05  SRM-PROJECT-KB        PIC S9(003)       COMP-3.
+               05  SRM-KINMUNY-KB        PIC S9(003)       COMP-3.
+               05  SRM-KINMUNY-CD        PIC  X(010).
+               05  SRM-SYORI-KB          PIC S9(003)       COMP-3.
+               05  SRM-SSYORIGRP-CD      PIC  X(016).
+               05  SRM-KYUKA-KEITAI-CD   PIC  X(010).
+               05  SRM-SUMSYA-KB         PIC  X(010).
+               05  SRM-KINMU-PTN-CD1     PIC  X(014).
+               05  SRM-KINMU-PTN-CD2     PIC  X(014).
+               05  SRM-KINMU-PTN-CD3     PIC  X(014).
+               05  SRM-KINMU-PTN-CD4     PIC  X(014).
+               05  SRM-JIKAN-CHECK-CD1   PIC  X(014).
+               05  SRM-JIKAN-CHECK-CD2   PIC  X(014).
+               05  SRM-JIKAN-CHECK-CD3   PIC  X(014).
+               05  SRM-SR-SYZ-CD-BK      PIC  X(014).
+               05  SRM-OUEN-FLG          PIC S9(003)       COMP-3.
+               05  SRM-KANRI-KB          PIC S9(003)       COMP-3.
+               05  SRM-ADMIN-KB          PIC S9(003)       COMP-3.
+               05  SRM-CAL-KB            PIC S9(001)       COMP-3.
+               05  SRM-NK-KINZ-KDT       PIC  X(025).
+               05  SRM-NK-FUYO-KDT       PIC  X(025).
+               05  SRM-RK-KINZ-KDT       PIC  X(025).
+               05  SRM-RK-FUYO-KDT       PIC  X(025).
+101124         05  SRM-IK-KINZ-KDT       PIC  X(025).
+               05  SRM-SYUK-KB           PIC S9(005)       COMP-3.
+               05  SRM-TAIS-KB           PIC S9(005)       COMP-3.
+               05  SRM-KYUS-KB           PIC S9(005)       COMP-3.
+               05  SRM-KAI-CD            PIC  X(020).
+               05  SRM-SKAI-CD           PIC  X(020).
+               05  SRM-GKAI-CD           PIC  X(020).
+               05  SRM-GSYZ-CD           PIC  X(014).
+               05  SRM-KYUSJ-CD          PIC  X(002).
+               05  SRM-KK-SYORI-CD       PIC  X(010).
+               05  SRM-KKOJ-MT           PIC S9(005)       COMP-3.
+               05  SRM-KKOJ-DT           PIC S9(005)       COMP-3.
+101124         05  SRM-IKKOJ-MT          PIC S9(005)       COMP-3.
+101124         05  SRM-IKKOJ-DT          PIC S9(005)       COMP-3.
+               05  SRM-KYUSTKKB          PIC S9(005)       COMP-3.
+               05  SRM-RENKYUS-TDT       PIC  X(025).
+               05  SRM-RENSYUK-TDT       PIC  X(025).
+               05  SRM-SR-SYA-KB         PIC S9(005)       COMP-3.
+               05  SRM-KUMI-KB           PIC S9(005)       COMP-3.
+               05  SRM-GENERAL-CD1       PIC  X(014).
+               05  SRM-GENERAL-CD2       PIC  X(014).
+               05  SRM-GENERAL-CD3       PIC  X(014).
+               05  SRM-GENERAL-CD4       PIC  X(014).
+               05  SRM-GENERAL-CD5       PIC  X(014).
+               05  SRM-GENERAL-CD6       PIC  X(014).
+               05  SRM-GENERAL-CD7       PIC  X(014).
+               05  SRM-GENERAL-CD8       PIC  X(014).
+               05  SRM-GENERAL-CD9       PIC  X(014).
+               05  SRM-GENERAL-CD10      PIC  X(014).
+               05  SRM-GENERAL-CD11      PIC  X(014).
+               05  SRM-GENERAL-CD12      PIC  X(014).
+               05  SRM-GENERAL-CD13      PIC  X(014).
+               05  SRM-GENERAL-CD14      PIC  X(014).
+               05  SRM-GENERAL-CD15      PIC  X(014).
+               05  SRM-GENERAL-CD16      PIC  X(014).
+               05  SRM-GENERAL-CD17      PIC  X(014).
+               05  SRM-GENERAL-CD18      PIC  X(014).
+               05  SRM-GENERAL-CD19      PIC  X(014).
+               05  SRM-GENERAL-CD20      PIC  X(014).
+               05  SRM-GENERAL-CD21      PIC  X(014).
+               05  SRM-GENERAL-CD22      PIC  X(014).
+               05  SRM-GENERAL-CD23      PIC  X(014).
+               05  SRM-GENERAL-CD24      PIC  X(014).
+               05  SRM-GENERAL-CD25      PIC  X(014).
+               05  SRM-GENERAL-CD26      PIC  X(014).
+               05  SRM-GENERAL-CD27      PIC  X(014).
+               05  SRM-GENERAL-CD28      PIC  X(014).
+               05  SRM-GENERAL-CD29      PIC  X(014).
+               05  SRM-GENERAL-CD30      PIC  X(014).
+               05  SRM-BOSS-KB           PIC S9(003)       COMP-3.
+               05  SRM-UNIT-SHIFT-KB     PIC S9(003)       COMP-3.
+081113         05  SRM-MLTCPNY-CD        PIC  X(020).
+               05  CNT-SRKNM             PIC S9(003)       COMP-3.
+080124         05  SRKNM  OCCURS 100 TIMES.
+                   07  SRK-KNM-SEQ           PIC S9(010)       COMP-3.
+                   07  SRK-END-STATUS        PIC S9(001)       COMP-3.
+                   07  SRK-K-SR-SYZ-CD       PIC  X(014).
+                   07  SRK-K-GENERAL-CD01    PIC  X(020).
+                   07  SRK-K-GENERAL-CD02    PIC  X(020).
+                   07  SRK-K-GENERAL-CD03    PIC  X(020).
+                   07  SRK-K-GENERAL-CD04    PIC  X(020).
+                   07  SRK-K-GENERAL-CD05    PIC  X(020).
+                   07  SRK-K-GENERAL-CD06    PIC  X(020).
+                   07  SRK-K-GENERAL-CD07    PIC  X(020).
+                   07  SRK-K-GENERAL-CD08    PIC  X(020).
+                   07  SRK-K-GENERAL-CD09    PIC  X(020).
+                   07  SRK-K-GENERAL-CD10    PIC  X(020).
+                   07  SRK-STATUS            PIC S9(003)       COMP-3.
+                   07  SRK-INSERT-FLG        PIC S9(001)       COMP-3.
+080501             07  SRK-DUMMY-FLG         PIC S9(001)       COMP-3.
+080108             07  SRK-IS-STS0-FLG       PIC S9(001)       COMP-3.
+       01  WK-SRMST-REC.
+           03  WSRM-SYA-ID               PIC S9(010)       COMP-3.
+           03  WSRM-SDATE                PIC  X(025).
+           03  WSRM-EDATE                PIC  X(025).
+           03  WSRM-HR-NO                PIC S9(010)       COMP-3.
+070308     03  WSRM-HRRK-KB              PIC S9(001)       COMP-3.
+           03  WSRM-STATUS               PIC S9(003)       COMP-3.
+           03  WSRM-TRG-KB               PIC S9(003)       COMP-3.
+           03  WSRM-SR-SYZ-CD            PIC  X(014).
+           03  WSRM-SYZ-PRC-DATE         PIC  X(025).
+           03  WSRM-SYZ-HAT-DATE         PIC  X(025).
+           03  WSRM-CHAKUNIN-DATE        PIC  X(025).
+           03  WSRM-KINMU-SYUBETU-CD     PIC  X(010).
+           03  WSRM-KS-PRC-DATE          PIC  X(025).
+           03  WSRM-KYUMU-SYUBETU-CD     PIC  X(010).
+           03  WSRM-JITAN-KINMU-KB       PIC S9(001)       COMP-3.
+           03  WSRM-JITAN-KINMU-CD       PIC  X(010).
+           03  WSRM-JITAN-SYUBETU-CD     PIC  X(010).
+           03  WSRM-SIME-CD              PIC  X(010).
+           03  WSRM-CAL-CD               PIC  X(010).
+041224     03  WSRM-KINMU-CAL-CD         PIC  X(020).
+           03  WSRM-HOLIDAY-TYPE-CD      PIC  X(010).
+           03  WSRM-HT-PRC-DATE          PIC  X(025).
+           03  WSRM-SAGYO-KEITAI-KB      PIC S9(003)       COMP-3.
+           03  WSRM-SAGYO-KEITAI-CD      PIC  X(010).
+           03  WSRM-PROJECT-KB           PIC S9(003)       COMP-3.
+           03  WSRM-KINMUNY-KB           PIC S9(003)       COMP-3.
+           03  WSRM-KINMUNY-CD           PIC  X(010).
+           03  WSRM-SYORI-KB             PIC S9(003)       COMP-3.
+           03  WSRM-SSYORIGRP-CD         PIC  X(016).
+           03  WSRM-KYUKA-KEITAI-CD      PIC  X(010).
+           03  WSRM-SUMSYA-KB            PIC  X(010).
+           03  WSRM-KINMU-PTN-CD1        PIC  X(014).
+           03  WSRM-KINMU-PTN-CD2        PIC  X(014).
+           03  WSRM-KINMU-PTN-CD3        PIC  X(014).
+           03  WSRM-KINMU-PTN-CD4        PIC  X(014).
+           03  WSRM-JIKAN-CHECK-CD1      PIC  X(014).
+           03  WSRM-JIKAN-CHECK-CD2      PIC  X(014).
+           03  WSRM-JIKAN-CHECK-CD3      PIC  X(014).
+           03  WSRM-SR-SYZ-CD-BK         PIC  X(014).
+           03  WSRM-OUEN-FLG             PIC S9(003)       COMP-3.
+           03  WSRM-KANRI-KB             PIC S9(003)       COMP-3.
+           03  WSRM-ADMIN-KB             PIC S9(003)       COMP-3.
+           03  WSRM-CAL-KB               PIC S9(001)       COMP-3.
+           03  WSRM-NK-KINZ-KDT          PIC  X(025).
+           03  WSRM-NK-FUYO-KDT          PIC  X(025).
+           03  WSRM-RK-KINZ-KDT          PIC  X(025).
+           03  WSRM-RK-FUYO-KDT          PIC  X(025).
+101124     03  WSRM-IK-KINZ-KDT          PIC  X(025).
+           03  WSRM-SYUK-KB              PIC S9(005)       COMP-3.
+           03  WSRM-TAIS-KB              PIC S9(005)       COMP-3.
+           03  WSRM-KYUS-KB              PIC S9(005)       COMP-3.
+           03  WSRM-KAI-CD               PIC  X(020).
+           03  WSRM-SKAI-CD              PIC  X(020).
+           03  WSRM-GKAI-CD              PIC  X(020).
+           03  WSRM-GSYZ-CD              PIC  X(014).
+           03  WSRM-KYUSJ-CD             PIC  X(002).
+           03  WSRM-KK-SYORI-CD          PIC  X(010).
+           03  WSRM-KKOJ-MT              PIC S9(005)       COMP-3.
+           03  WSRM-KKOJ-DT              PIC S9(005)       COMP-3.
+101124     03  WSRM-IKKOJ-MT             PIC S9(005)       COMP-3.
+101124     03  WSRM-IKKOJ-DT             PIC S9(005)       COMP-3.
+           03  WSRM-KYUSTKKB             PIC S9(005)       COMP-3.
+           03  WSRM-RENKYUS-TDT          PIC  X(025).
+           03  WSRM-RENSYUK-TDT          PIC  X(025).
+           03  WSRM-SR-SYA-KB            PIC S9(005)       COMP-3.
+           03  WSRM-KUMI-KB              PIC S9(005)       COMP-3.
+           03  WSRM-GENERAL-CD1          PIC  X(014).
+           03  WSRM-GENERAL-CD2          PIC  X(014).
+           03  WSRM-GENERAL-CD3          PIC  X(014).
+           03  WSRM-GENERAL-CD4          PIC  X(014).
+           03  WSRM-GENERAL-CD5          PIC  X(014).
+           03  WSRM-GENERAL-CD6          PIC  X(014).
+           03  WSRM-GENERAL-CD7          PIC  X(014).
+           03  WSRM-GENERAL-CD8          PIC  X(014).
+           03  WSRM-GENERAL-CD9          PIC  X(014).
+           03  WSRM-GENERAL-CD10         PIC  X(014).
+           03  WSRM-GENERAL-CD11         PIC  X(014).
+           03  WSRM-GENERAL-CD12         PIC  X(014).
+           03  WSRM-GENERAL-CD13         PIC  X(014).
+           03  WSRM-GENERAL-CD14         PIC  X(014).
+           03  WSRM-GENERAL-CD15         PIC  X(014).
+           03  WSRM-GENERAL-CD16         PIC  X(014).
+           03  WSRM-GENERAL-CD17         PIC  X(014).
+           03  WSRM-GENERAL-CD18         PIC  X(014).
+           03  WSRM-GENERAL-CD19         PIC  X(014).
+           03  WSRM-GENERAL-CD20         PIC  X(014).
+           03  WSRM-GENERAL-CD21         PIC  X(014).
+           03  WSRM-GENERAL-CD22         PIC  X(014).
+           03  WSRM-GENERAL-CD23         PIC  X(014).
+           03  WSRM-GENERAL-CD24         PIC  X(014).
+           03  WSRM-GENERAL-CD25         PIC  X(014).
+           03  WSRM-GENERAL-CD26         PIC  X(014).
+           03  WSRM-GENERAL-CD27         PIC  X(014).
+           03  WSRM-GENERAL-CD28         PIC  X(014).
+           03  WSRM-GENERAL-CD29         PIC  X(014).
+           03  WSRM-GENERAL-CD30         PIC  X(014).
+           03  WSRM-BOSS-KB              PIC S9(003)       COMP-3.
+           03  WSRM-UNIT-SHIFT-KB        PIC S9(003)       COMP-3.
+081113     03  WSRM-MLTCPNY-CD           PIC  X(020).
+       01  CP-SRMST-REC.
+           03  CSRM-SYA-ID               PIC S9(010)       COMP-3.
+           03  CSRM-SDATE                PIC  X(025).
+           03  CSRM-EDATE                PIC  X(025).
+           03  CSRM-HR-NO                PIC S9(010)       COMP-3.
+070308     03  CSRM-HRRK-KB              PIC S9(001)       COMP-3.
+           03  CSRM-STATUS               PIC S9(003)       COMP-3.
+           03  CSRM-TRG-KB               PIC S9(003)       COMP-3.
+           03  CSRM-SR-SYZ-CD            PIC  X(014).
+           03  CSRM-SYZ-PRC-DATE         PIC  X(025).
+           03  CSRM-SYZ-HAT-DATE         PIC  X(025).
+           03  CSRM-CHAKUNIN-DATE        PIC  X(025).
+           03  CSRM-KINMU-SYUBETU-CD     PIC  X(010).
+           03  CSRM-KS-PRC-DATE          PIC  X(025).
+           03  CSRM-KYUMU-SYUBETU-CD     PIC  X(010).
+           03  CP-JITAN-KINMU-KB.
+             05  CSRM-JITAN-KINMU-KB     PIC S9(001)       COMP-3.
+           03  CSRM-JITAN-KINMU-CD       PIC  X(010).
+           03  CSRM-JITAN-SYUBETU-CD     PIC  X(010).
+           03  CSRM-SIME-CD              PIC  X(010).
+           03  CSRM-CAL-CD               PIC  X(010).
+041224     03  CSRM-KINMU-CAL-CD         PIC  X(020).
+           03  CSRM-HOLIDAY-TYPE-CD      PIC  X(010).
+           03  CSRM-HT-PRC-DATE          PIC  X(025).
+           03  CP-SAGYO-KEITAI-KB.
+             05  CSRM-SAGYO-KEITAI-KB    PIC S9(003)       COMP-3.
+           03  CSRM-SAGYO-KEITAI-CD      PIC  X(010).
+           03  CP-PROJECT-KB.
+             05  CSRM-PROJECT-KB         PIC S9(003)       COMP-3.
+           03  CP-KINMUNY-KB.
+             05  CSRM-KINMUNY-KB         PIC S9(003)       COMP-3.
+           03  CSRM-KINMUNY-CD           PIC  X(010).
+           03  CP-SYORI-KB.
+             05  CSRM-SYORI-KB           PIC S9(003)       COMP-3.
+           03  CSRM-SSYORIGRP-CD         PIC  X(016).
+           03  CSRM-KYUKA-KEITAI-CD      PIC  X(010).
+           03  CSRM-SUMSYA-KB            PIC  X(010).
+           03  CSRM-KINMU-PTN-CD1        PIC  X(014).
+           03  CSRM-KINMU-PTN-CD2        PIC  X(014).
+           03  CSRM-KINMU-PTN-CD3        PIC  X(014).
+           03  CSRM-KINMU-PTN-CD4        PIC  X(014).
+           03  CSRM-JIKAN-CHECK-CD1      PIC  X(014).
+           03  CSRM-JIKAN-CHECK-CD2      PIC  X(014).
+           03  CSRM-JIKAN-CHECK-CD3      PIC  X(014).
+           03  CSRM-SR-SYZ-CD-BK         PIC  X(014).
+           03  CSRM-OUEN-FLG             PIC S9(003)       COMP-3.
+           03  CP-KANRI-KB.
+             05  CSRM-KANRI-KB           PIC S9(003)       COMP-3.
+           03  CP-ADMIN-KB.
+             05  CSRM-ADMIN-KB           PIC S9(003)       COMP-3.
+           03  CP-CAL-KB.
+             05  CSRM-CAL-KB             PIC S9(001)       COMP-3.
+           03  CSRM-NK-KINZ-KDT          PIC  X(025).
+           03  CSRM-NK-FUYO-KDT          PIC  X(025).
+           03  CSRM-RK-KINZ-KDT          PIC  X(025).
+           03  CSRM-RK-FUYO-KDT          PIC  X(025).
+101124     03  CSRM-IK-KINZ-KDT          PIC  X(025).
+           03  CP-SYUK-KB.
+             05  CSRM-SYUK-KB            PIC S9(005)       COMP-3.
+           03  CP-TAIS-KB.
+             05  CSRM-TAIS-KB            PIC S9(005)       COMP-3.
+           03  CP-KYUS-KB.
+             05  CSRM-KYUS-KB            PIC S9(005)       COMP-3.
+           03  CSRM-KAI-CD               PIC  X(020).
+           03  CSRM-SKAI-CD              PIC  X(020).
+           03  CSRM-GKAI-CD              PIC  X(020).
+           03  CSRM-GSYZ-CD              PIC  X(014).
+           03  CSRM-KYUSJ-CD             PIC  X(002).
+           03  CSRM-KK-SYORI-CD          PIC  X(010).
+           03  CP-KKOJ-MT.
+             05  CSRM-KKOJ-MT            PIC S9(005)       COMP-3.
+           03  CP-KKOJ-DT.
+             05  CSRM-KKOJ-DT            PIC S9(005)       COMP-3.
+101124     03  CP-IKKOJ-MT.
+101124       05  CSRM-IKKOJ-MT           PIC S9(005)       COMP-3.
+101124     03  CP-IKKOJ-DT.
+101124       05  CSRM-IKKOJ-DT           PIC S9(005)       COMP-3.
+           03  CP-KYUSTKKB.
+             05  CSRM-KYUSTKKB           PIC S9(005)       COMP-3.
+           03  CSRM-RENKYUS-TDT          PIC  X(025).
+           03  CSRM-RENSYUK-TDT          PIC  X(025).
+           03  CP-SR-SYA-KB.
+             05  CSRM-SR-SYA-KB          PIC S9(005)       COMP-3.
+           03  CP-KUMI-KB.
+             05  CSRM-KUMI-KB            PIC S9(005)       COMP-3.
+           03  CSRM-GENERAL-CD1          PIC  X(014).
+           03  CSRM-GENERAL-CD2          PIC  X(014).
+           03  CSRM-GENERAL-CD3          PIC  X(014).
+           03  CSRM-GENERAL-CD4          PIC  X(014).
+           03  CSRM-GENERAL-CD5          PIC  X(014).
+           03  CSRM-GENERAL-CD6          PIC  X(014).
+           03  CSRM-GENERAL-CD7          PIC  X(014).
+           03  CSRM-GENERAL-CD8          PIC  X(014).
+           03  CSRM-GENERAL-CD9          PIC  X(014).
+           03  CSRM-GENERAL-CD10         PIC  X(014).
+           03  CSRM-GENERAL-CD11         PIC  X(014).
+           03  CSRM-GENERAL-CD12         PIC  X(014).
+           03  CSRM-GENERAL-CD13         PIC  X(014).
+           03  CSRM-GENERAL-CD14         PIC  X(014).
+           03  CSRM-GENERAL-CD15         PIC  X(014).
+           03  CSRM-GENERAL-CD16         PIC  X(014).
+           03  CSRM-GENERAL-CD17         PIC  X(014).
+           03  CSRM-GENERAL-CD18         PIC  X(014).
+           03  CSRM-GENERAL-CD19         PIC  X(014).
+           03  CSRM-GENERAL-CD20         PIC  X(014).
+           03  CSRM-GENERAL-CD21         PIC  X(014).
+           03  CSRM-GENERAL-CD22         PIC  X(014).
+           03  CSRM-GENERAL-CD23         PIC  X(014).
+           03  CSRM-GENERAL-CD24         PIC  X(014).
+           03  CSRM-GENERAL-CD25         PIC  X(014).
+           03  CSRM-GENERAL-CD26         PIC  X(014).
+           03  CSRM-GENERAL-CD27         PIC  X(014).
+           03  CSRM-GENERAL-CD28         PIC  X(014).
+           03  CSRM-GENERAL-CD29         PIC  X(014).
+           03  CSRM-GENERAL-CD30         PIC  X(014).
+           03  CP-BOSS-KB.
+             05  CSRM-BOSS-KB            PIC S9(003)       COMP-3.
+           03  CP-UNIT-SHIFT-KB.
+             05  CSRM-UNIT-SHIFT-KB      PIC S9(003)       COMP-3.
+081113     03  CSRM-MLTCPNY-CD           PIC  X(020).
+           03  CSRM-CNT-SRKNM            PIC S9(003)       COMP-3.
+080124     03  CSRKNM  OCCURS 100 TIMES.
+               05  CSRK-KNM-SEQ           PIC S9(010)       COMP-3.
+               05  CSRK-END-STATUS        PIC S9(001)       COMP-3.
+               05  CSRK-K-SR-SYZ-CD       PIC  X(014).
+               05  CSRK-K-GENERAL-CD01    PIC  X(020).
+               05  CSRK-K-GENERAL-CD02    PIC  X(020).
+               05  CSRK-K-GENERAL-CD03    PIC  X(020).
+               05  CSRK-K-GENERAL-CD04    PIC  X(020).
+               05  CSRK-K-GENERAL-CD05    PIC  X(020).
+               05  CSRK-K-GENERAL-CD06    PIC  X(020).
+               05  CSRK-K-GENERAL-CD07    PIC  X(020).
+               05  CSRK-K-GENERAL-CD08    PIC  X(020).
+               05  CSRK-K-GENERAL-CD09    PIC  X(020).
+               05  CSRK-K-GENERAL-CD10    PIC  X(020).
+               05  CSRK-STATUS            PIC S9(003)       COMP-3.
+               05  CSRK-INSERT-FLG        PIC S9(001)       COMP-3.
+080501         05  CSRK-DUMMY-FLG         PIC S9(001)       COMP-3.
+080108         05  CSRK-IS-STS0-FLG       PIC S9(001)       COMP-3.
+      *
+060524 01  SRMST-COMPARE-REC.
+           03  SRMST-COMPARE OCCURS 2 TIMES.
+               05  COM-SYA-ID           PIC S9(010)       COMP-3.
+               05  COM-SDATE            PIC  X(025).
+               05  COM-EDATE            PIC  X(025).
+               05  COM-HR-NO            PIC S9(010)       COMP-3.
+070308         05  COM-HRRK-KB          PIC S9(001)       COMP-3.
+               05  COM-STATUS           PIC S9(003)       COMP-3.
+               05  COM-TRG-KB           PIC S9(003)       COMP-3.
+               05  COM-SONOTA.
+                   07  COM-SR-SYZ-CD        PIC  X(014).
+                   07  COM-SYZ-PRC-DATE     PIC  X(025).
+                   07  COM-SYZ-HAT-DATE     PIC  X(025).
+                   07  COM-CHAKUNIN-DATE    PIC  X(025).
+                   07  COM-KINMU-SYUBETU-CD PIC  X(010).
+                   07  COM-KS-PRC-DATE      PIC  X(025).
+                   07  COM-KYUMU-SYUBETU-CD PIC  X(010).
+                   07  COM-JITAN-KINMU-KB   PIC S9(001)       COMP-3.
+                   07  COM-JITAN-KINMU-CD   PIC  X(010).
+                   07  COM-JITAN-SYUBETU-CD PIC  X(010).
+                   07  COM-SIME-CD          PIC  X(010).
+                   07  COM-CAL-CD           PIC  X(010).
+                   07  COM-KINMU-CAL-CD     PIC  X(020).
+                   07  COM-HOLIDAY-TYPE-CD  PIC  X(010).
+                   07  COM-HT-PRC-DATE      PIC  X(025).
+                   07  COM-SAGYO-KEITAI-KB  PIC S9(003)       COMP-3.
+                   07  COM-SAGYO-KEITAI-CD  PIC  X(010).
+                   07  COM-PROJECT-KB       PIC S9(003)       COMP-3.
+                   07  COM-KINMUNY-KB       PIC S9(003)       COMP-3.
+                   07  COM-KINMUNY-CD       PIC  X(010).
+                   07  COM-SYORI-KB         PIC S9(003)       COMP-3.
+                   07  COM-SSYORIGRP-CD     PIC  X(016).
+                   07  COM-KYUKA-KEITAI-CD  PIC  X(010).
+                   07  COM-SUMSYA-KB        PIC  X(010).
+                   07  COM-KINMU-PTN-CD1    PIC  X(014).
+                   07  COM-KINMU-PTN-CD2    PIC  X(014).
+                   07  COM-KINMU-PTN-CD3    PIC  X(014).
+                   07  COM-KINMU-PTN-CD4    PIC  X(014).
+                   07  COM-JIKAN-CHECK-CD1  PIC  X(014).
+                   07  COM-JIKAN-CHECK-CD2  PIC  X(014).
+                   07  COM-JIKAN-CHECK-CD3  PIC  X(014).
+                   07  COM-SR-SYZ-CD-BK     PIC  X(014).
+                   07  COM-OUEN-FLG         PIC S9(003)       COMP-3.
+                   07  COM-KANRI-KB         PIC S9(003)       COMP-3.
+                   07  COM-ADMIN-KB         PIC S9(003)       COMP-3.
+                   07  COM-CAL-KB           PIC S9(001)       COMP-3.
+                   07  COM-NK-KINZ-KDT      PIC  X(025).
+                   07  COM-NK-FUYO-KDT      PIC  X(025).
+                   07  COM-RK-KINZ-KDT      PIC  X(025).
+                   07  COM-RK-FUYO-KDT      PIC  X(025).
+101124             07  COM-IK-KINZ-KDT      PIC  X(025).
+                   07  COM-SYUK-KB          PIC S9(005)       COMP-3.
+                   07  COM-TAIS-KB          PIC S9(005)       COMP-3.
+                   07  COM-KYUS-KB          PIC S9(005)       COMP-3.
+                   07  COM-KAI-CD           PIC  X(020).
+                   07  COM-SKAI-CD          PIC  X(020).
+                   07  COM-GKAI-CD          PIC  X(020).
+                   07  COM-GSYZ-CD          PIC  X(014).
+                   07  COM-KYUSJ-CD         PIC  X(002).
+                   07  COM-KK-SYORI-CD      PIC  X(010).
+                   07  COM-KKOJ-MT          PIC S9(005)       COMP-3.
+                   07  COM-KKOJ-DT          PIC S9(005)       COMP-3.
+101124             07  COM-IKKOJ-MT         PIC S9(005)       COMP-3.
+101124             07  COM-IKKOJ-DT         PIC S9(005)       COMP-3.
+                   07  COM-KYUSTKKB         PIC S9(005)       COMP-3.
+                   07  COM-RENKYUS-TDT      PIC  X(025).
+                   07  COM-RENSYUK-TDT      PIC  X(025).
+                   07  COM-SR-SYA-KB        PIC S9(005)       COMP-3.
+                   07  COM-KUMI-KB          PIC S9(005)       COMP-3.
+                   07  COM-GENERAL-CD1      PIC  X(014).
+                   07  COM-GENERAL-CD2      PIC  X(014).
+                   07  COM-GENERAL-CD3      PIC  X(014).
+                   07  COM-GENERAL-CD4      PIC  X(014).
+                   07  COM-GENERAL-CD5      PIC  X(014).
+                   07  COM-GENERAL-CD6      PIC  X(014).
+                   07  COM-GENERAL-CD7      PIC  X(014).
+                   07  COM-GENERAL-CD8      PIC  X(014).
+                   07  COM-GENERAL-CD9      PIC  X(014).
+                   07  COM-GENERAL-CD10     PIC  X(014).
+                   07  COM-GENERAL-CD11     PIC  X(014).
+                   07  COM-GENERAL-CD12     PIC  X(014).
+                   07  COM-GENERAL-CD13     PIC  X(014).
+                   07  COM-GENERAL-CD14     PIC  X(014).
+                   07  COM-GENERAL-CD15     PIC  X(014).
+                   07  COM-GENERAL-CD16     PIC  X(014).
+                   07  COM-GENERAL-CD17     PIC  X(014).
+                   07  COM-GENERAL-CD18     PIC  X(014).
+                   07  COM-GENERAL-CD19     PIC  X(014).
+                   07  COM-GENERAL-CD20     PIC  X(014).
+                   07  COM-GENERAL-CD21     PIC  X(014).
+                   07  COM-GENERAL-CD22     PIC  X(014).
+                   07  COM-GENERAL-CD23     PIC  X(014).
+                   07  COM-GENERAL-CD24     PIC  X(014).
+                   07  COM-GENERAL-CD25     PIC  X(014).
+                   07  COM-GENERAL-CD26     PIC  X(014).
+                   07  COM-GENERAL-CD27     PIC  X(014).
+                   07  COM-GENERAL-CD28     PIC  X(014).
+                   07  COM-GENERAL-CD29     PIC  X(014).
+                   07  COM-GENERAL-CD30     PIC  X(014).
+                   07  COM-BOSS-KB          PIC S9(003)       COMP-3.
+                   07  COM-UNIT-SHIFT-KB    PIC S9(003)       COMP-3.
+081113             07  COM-MLTCPNY-CD       PIC  X(020).
+                   07  COM-CNT-SRKNM        PIC S9(003)       COMP-3.
+080124             07  COM-SRKNM  OCCURS 100 TIMES.
+                       09  COM-KNM-SEQ           PIC S9(010)    COMP-3.
+                       09  COM-END-STATUS        PIC S9(001)    COMP-3.
+                       09  COM-K-SR-SYZ-CD       PIC  X(014).
+                       09  COM-K-GENERAL-CD01    PIC  X(020).
+                       09  COM-K-GENERAL-CD02    PIC  X(020).
+                       09  COM-K-GENERAL-CD03    PIC  X(020).
+                       09  COM-K-GENERAL-CD04    PIC  X(020).
+                       09  COM-K-GENERAL-CD05    PIC  X(020).
+                       09  COM-K-GENERAL-CD06    PIC  X(020).
+                       09  COM-K-GENERAL-CD07    PIC  X(020).
+                       09  COM-K-GENERAL-CD08    PIC  X(020).
+                       09  COM-K-GENERAL-CD09    PIC  X(020).
+                       09  COM-K-GENERAL-CD10    PIC  X(020).
+111016                 09  COM-SRK-STATUS        PIC S9(003)    COMP-3.
+111016                 09  COM-SRK-INSERT-FLG    PIC S9(001)    COMP-3.
+                       09  COM-INSERT-FLG        PIC S9(001)    COMP-3.
+080108                 09  COM-IS-STS0-FLG       PIC S9(001)    COMP-3.
+      *---------------------------------------------------------------
+      *  ??????
+      *---------------------------------------------------------------
+       01  WSRK-SYA-ID               PIC S9(010)       COMP-3.
+       01  WSRK-SDATE                PIC  X(010).
+       01  WSRK-EDATE                PIC  X(010).
+       01  WK-SRKNM-REC.
+           03  WSRK-KNM-SEQ              PIC S9(010)       COMP-3.
+           03  WSRK-END-STATUS           PIC S9(001)       COMP-3.
+           03  WSRK-K-SR-SYZ-CD          PIC  X(014).
+           03  WSRK-K-GENERAL-CD01       PIC  X(020).
+           03  WSRK-K-GENERAL-CD02       PIC  X(020).
+           03  WSRK-K-GENERAL-CD03       PIC  X(020).
+           03  WSRK-K-GENERAL-CD04       PIC  X(020).
+           03  WSRK-K-GENERAL-CD05       PIC  X(020).
+           03  WSRK-K-GENERAL-CD06       PIC  X(020).
+           03  WSRK-K-GENERAL-CD07       PIC  X(020).
+           03  WSRK-K-GENERAL-CD08       PIC  X(020).
+           03  WSRK-K-GENERAL-CD09       PIC  X(020).
+           03  WSRK-K-GENERAL-CD10       PIC  X(020).
+           03  WSRK-STATUS               PIC S9(003)       COMP-3.
+           03  WSRK-INSERT-FLG           PIC S9(001)       COMP-3.
+080501     03  WSRK-DUMMY-FLG            PIC S9(001)       COMP-3.
+080108     03  WSRK-IS-STS0-FLG          PIC S9(001)       COMP-3.
+      *---------------------------------------------------------------
+      *  ????????????
+      *---------------------------------------------------------------
+       01  SEC-WK.
+           03  SEC-JOBID           PIC  X(032).
+           03  SEC-ENABLED         PIC S9(003)  COMP-3.
+           03  SEC-DATE            PIC  X(025).
+100331 01  PAR-ID-STR              PIC  X(005).
+      *
+100331*-----------------------------
+100331* ??????????????
+100331*-----------------------------
+100331 01  PARA-CONTR.
+100331     03  PR-CNT              PIC S9(003)  COMP-3.
+100331     03  PR-TIME             PIC S9(005)  COMP-3 VALUE ZERO.
+100331*
+100331 01  PM-ERROR-CNT            PIC S9(003)  COMP-3.
+100331 01  JL-PARA-CNT             PIC S9(003)  COMP-3.
+100331 01  JL-PARA-OK-CNT          PIC S9(003)  COMP-3.
+      *
+      *---------------------------------------------------------------
+      *  ??????????????
+      *---------------------------------------------------------------
+110601 01  SIM-WK.
+           03  P-SIM-KB            PIC  X(003)  VALUE SPACE.
+           03  SIM-KB              PIC S9(001)  COMP-3.
+           03  USE-SIM             PIC S9(001)  COMP-3.
+           03  DOING-SIM           PIC S9(001)  COMP-3.
+      *
+      *---------------------------------------------------------------
+      *  ????No(??Update?)
+      *---------------------------------------------------------------
+       01  DBHR-MAX               PIC S9(007) COMP-3  VALUE 1000.
+       01  CNT-DBHR               PIC S9(007) COMP-3.
+       01  DBHR-REC.
+070817     03  DB-HR-SYA-ID       PIC S9(010)      COMP-3  OCCURS 1500.
+070817     03  DB-HR-HR-NO        PIC S9(010)      COMP-3  OCCURS 1500.
+070817     03  DB-HR-HRRK-KB      PIC S9(003)      COMP-3  OCCURS 1500.
+      *---------------------------------------------------------------
+090525*  ????No(?????????Update?)
+      *---------------------------------------------------------------
+       01  KIHON-HR-MAX           PIC S9(007) COMP-3  VALUE 1000.
+       01  CNT-KIHON-HR           PIC S9(007) COMP-3.
+       01  KIHON-HR-REC.
+           03  KIHON-HR-SYA-ID    PIC S9(010)      COMP-3  OCCURS 1500.
+           03  KIHON-HR-HR-NO     PIC S9(010)      COMP-3  OCCURS 1500.
+           03  KIHON-HR-HRRK-KB   PIC S9(003)      COMP-3  OCCURS 1500.
+      *---------------------------------------------------------------
+      *  ????????(??Update?)
+      *---------------------------------------------------------------
+060206 01  DBTRNRK-MAX            PIC S9(007) COMP-3  VALUE 1000.
+060206 01  CNT-DBTRNRK            PIC S9(007) COMP-3.
+060206 01  DBTRNRK-REC.
+060206     03  DB-SYA-ID          PIC S9(010)      COMP-3  OCCURS 1000.
+           03  DB-SRTBL-NO        PIC S9(010)      COMP-3  OCCURS 1000.
+060206     03  DB-SRFLD-ID        PIC  X(032)              OCCURS 1000.
+060206     03  DB-SRFLD-OVAL      PIC  X(030)              OCCURS 1000.
+060524     03  DB-SRFLD-NVAL      PIC  X(030)              OCCURS 1000.
+060206     03  DB-LNK-DATE        PIC  X(025)              OCCURS 1000.
+060222     03  DB-HR-NO           PIC S9(010)      COMP-3  OCCURS 1000.
+070308     03  DB-HRRK-KB         PIC S9(003)      COMP-3  OCCURS 1000.
+060222     03  DB-STATUS          PIC S9(001)      COMP-3  OCCURS 1000.
+060728     03  DB-TRN-KB          PIC S9(001)      COMP-3  OCCURS 1000.
+           03  DB-KNM-SEQ         PIC S9(010)      COMP-3  OCCURS 1000.
+      *
+      *---------------------------------------------------------------
+      *  ????????
+      *---------------------------------------------------------------
+       01  CONST-AREA.
+           03  C-PGMID             PIC  X(009)  VALUE "SRJLNK002".
+           03  C-MAX-DATE          PIC  X(010)  VALUE "2382/12/31".
+080225*     03  C-VERSION           PIC  X(009)  VALUE "CSR201103".
+080516*     03  C-VERSION           PIC  X(009)  VALUE "CSR202101".
+080929*     03  C-VERSION           PIC  X(009)  VALUE "CSR210102".
+081112*     03  C-VERSION           PIC  X(009)  VALUE "CSR212100".
+090414*     03  C-VERSION           PIC  X(009)  VALUE "CSR212101".
+090615*     03  C-VERSION           PIC  X(009)  VALUE "CSR212102".
+090703*     03  C-VERSION           PIC  X(010)  VALUE "CSR212102A".
+090918*     03  C-VERSION           PIC  X(009)  VALUE "CSR220101".
+1004--*     03  C-VERSION           PIC  X(012)  VALUE "22210000".
+1008--*     03  C-VERSION           PIC  X(012)  VALUE "22310000".
+100917*     03  C-VERSION           PIC  X(012)  VALUE "22310100".
+101112*     03  C-VERSION           PIC  X(012)  VALUE "22310300".
+1012--*     03  C-VERSION           PIC  X(012)  VALUE "22310302".
+1104--*     03  C-VERSION           PIC  X(012)  VALUE "23010000".
+110601*     03  C-VERSION           PIC  X(012)  VALUE "23210000".
+120717*     03  C-VERSION           PIC  X(012)  VALUE "23310300".
+1306--*     03  C-VERSION           PIC  X(012)  VALUE "23990500".
+1309--*     03  C-VERSION           PIC  X(012)  VALUE "32010100".
+1401--     03  C-VERSION           PIC  X(012)  VALUE "33010100".
+
+      *#############################################
+      *---------------------------------------------------------------
+
+      *---------------------------------------------------------------
+      *---------------------------------------------------------------
+      *  ????????????????(??ID?)
+      *---------------------------------------------------------------
+       01  WS-SRLNKTRN-REC.
+           03  CNT-LNKTRN               PIC  9(007).
+           03  WS-SRLNKTRN OCCURS 1000 TIMES.
+               05  WS-SRTBL-NO         PIC S9(010)      COMP-3.
+               05  WS-SRFLD-ID         PIC  X(032).
+               05  WS-SRFLD-OVAL       PIC  X(030).
+060206         05  WS-SRFLD-OVAL-J     PIC  X(030).
+               05  WS-SRFLD-NVAL       PIC  X(030).
+060524         05  WS-SRFLD-NVAL-J     PIC  X(030).
+               05  WS-LNK-DATE         PIC  X(025).
+               05  WS-TRN-KB           PIC S9(001)      COMP-3.
+               05  WS-KNM-SEQ          PIC S9(010)       COMP-3.
+060222         05  WS-HR-NO            PIC S9(010)      COMP-3.
+070308         05  WS-HRRK-KB          PIC S9(003)      COMP-3.
+060222         05  WS-STATUS           PIC S9(001)      COMP-3.
+060222         05  WS-ENTRY-KB         PIC S9(001)      COMP-3.
+               05  WS-SYORI-FLG        PIC S9(001)       COMP-3.
+      *---------------------------------------------------------------
+      *  ????
+      *---------------------------------------------------------------
+       01  WORK-AREA.
+           03  OLD-SYA-ID          PIC S9(010)  COMP-3.
+           03  OLD-LNK-DATE        PIC  X(025).
+           03  OLD-HR-NO           PIC S9(010)  COMP-3.
+070308     03  OLD-HRRK-KB         PIC S9(003)  COMP-3.
+           03  OLD-STATUS          PIC S9(001)  COMP-3.
+060524     03  OLD-TRN-KB          PIC S9(001)  COMP-3.
+130603     03  OLD-LNK-DATE-KB     PIC S9(001)  COMP-3.
+           03  SRFLD-ID            PIC  X(032).
+      *
+060206     03  WK-VAL-CHR          PIC  X(030).
+060206     03  WK-VAL-CHR-R REDEFINES WK-VAL-CHR.
+060206         05 WK-VALUE-CHR     PIC  X(001) OCCURS 30.
+      *##############################################
+060206     03  WK-VAL-DECEDT       PIC  ----------9.
+060206     03  WK-VAL-DECEDT-R REDEFINES WK-VAL-DECEDT.
+060206         05 WK-VALUE-DECEDT  PIC  X(001) OCCURS 11.
+      *    ????
+           03  DATE-NOW.
+               05  DATE-NOW-YY     PIC  X(004).
+               05  DATE-NOW-MM     PIC  X(002).
+               05  DATE-NOW-DD     PIC  X(002).
+               05  DATE-NOW-HH     PIC  X(002).
+               05  DATE-NOW-FF     PIC  X(002).
+               05  DATE-NOW-SS     PIC  X(002).
+               05  FILLER          PIC  X(007).
+060524     03  WK-ADD-DAYS         PIC S9(003)      COMP-3.
+060524     03  WK-DATE             PIC  X(010).
+      *
+060524     03  TMP-DATE-NUM        PIC S9(008)      COMP-3.
+060524     03  TMP-YEAR            PIC S9(004)      COMP-3.
+060524     03  TMP-MONTH           PIC S9(002)      COMP-3.
+060524     03  TMP-DAY             PIC S9(002)      COMP-3.
+060524     03  TMP-YEAR-STR        PIC  X(004).
+060524     03  TMP-MONTH-STR       PIC  X(002).
+060524     03  TMP-DAY-STR         PIC  X(002).
+060524     03  STRING-POINTER      PIC S9(001)      COMP-3.
+      *---------------------------------------------------------------
+      *  ?????
+      *---------------------------------------------------------------
+       01  FLG-AREA.
+           03  LNKSYAIN-EOF-FLG    PIC  9(001).
+060524     03  RESTORE-EOF-FLG     PIC  9(001).
+           03  CHK-STS1-FLG        PIC  9(001).
+           03  IS-STS0-FLG         PIC  9(001).
+060524     03  SRM-EQUAL-DATE      PIC  9(001).
+060524     03  SAME-DATA-FLG       PIC  9(001).
+100331     03  FLG-END             PIC  9(001).
+      *---------------------------------------------------------------
+      *  ?????
+      *---------------------------------------------------------------
+       01  IDX-AREA.
+           03  IX                  PIC S9(005)  COMP-3.
+           03  IY                  PIC S9(005)  COMP-3.
+           03  IZ                  PIC S9(005)  COMP-3.
+           03  SRM-IDX             PIC S9(005)  COMP-3.
+           03  SRM-IDX2            PIC S9(005)  COMP-3.
+           03  KNM-IDX             PIC S9(005)  COMP-3.
+           03  KNM-IDX2            PIC S9(005)  COMP-3.
+060524     03  SRM-PTR             PIC S9(005)  COMP-3.
+080108     03  SRM-PTR2            PIC S9(005)  COMP-3.
+           03  KNM-PTR             PIC S9(005)  COMP-3.
+           03  KNM-PTR2            PIC S9(005)  COMP-3.
+111016*--------??????(?????SDATE??)??????
+060524     03  WK-IDX              PIC S9(005)  COMP-3.
+111016*--------????????????
+111016     03  WK-IDX2             PIC S9(005)  COMP-3.
+           03  WK-SRM-IDX          PIC S9(005)  COMP-3.
+060206     03  IX1                 PIC S9(005)  COMP-3.
+060206     03  IX2                 PIC S9(005)  COMP-3.
+060206     03  IX3                 PIC S9(005)  COMP-3.
+060524     03  IX4                 PIC S9(005)  COMP-3.
+060524     03  IX5                 PIC S9(005)  COMP-3.
+071017     03  IX8                 PIC S9(005)  COMP-3.
+071017     03  IX9                 PIC S9(005)  COMP-3.
+080108     03  IX6                 PIC S9(005)  COMP-3.
+080108     03  IX7                 PIC S9(005)  COMP-3.
+071004     03  DBHR-PTR            PIC S9(005)  COMP-3.
+090525     03  KIHON-HR-PTR        PIC S9(005)  COMP-3.
+      *---------------------------------------------------------------
+      *  ??????
+      *---------------------------------------------------------------
+       01  CNT-AREA.
+           03  SRM-NEW-CNT         PIC  S9(008).
+           03  SRM-INS-CNT         PIC  S9(008).
+           03  SRM-UPD-CNT         PIC  S9(008).
+060524     03  SRM-DEL-CNT         PIC  S9(008).
+           03  SRK-NEW-CNT         PIC  S9(008).
+           03  SRK-INS-CNT         PIC  S9(008).
+           03  SRK-UPD-CNT         PIC  S9(008).
+           03  SRK-DEL-CNT         PIC  S9(008).
+           03  SRK-MRG-CNT         PIC  S9(008).
+           03  WK-TRN-CNT          PIC  S9(010).
+      *
+      *---------------------------------------------------------------
+      *  SQL??
+      *---------------------------------------------------------------
+      *----1119
+       01  TRN-SQL.
+         03  FILLER   PIC  X(020)  VALUE  "SELECT              ".
+         03  FILLER   PIC  X(020)  VALUE  " rk.sya_id,         ".
+         03  FILLER   PIC  X(020)  VALUE  " rk.srtbl_no,       ".
+         03  FILLER   PIC  X(020)  VALUE  " rk.srfld_id,       ".
+         03  FILLER   PIC  X(020)  VALUE  " rk.srfld_oval,     ".
+         03  FILLER   PIC  X(020)  VALUE  " rk.srfld_nval,     ".
+         03  FILLER   PIC  X(021)  VALUE  " to_char(rk.lnk_date,".
+         03  FILLER   PIC  X(020)  VALUE  "     'YYYY/MM/DD'), ".
+         03  FILLER   PIC  X(020)  VALUE  " rk.status,         ".
+         03  FILLER   PIC  X(020)  VALUE  " rk.hr_no,          ".
+070308   03  FILLER   PIC  X(020)  VALUE  " rk.hrrk_kb,        ".
+         03  FILLER   PIC  X(020)  VALUE  " rk.trn_kb,         ".
+         03  FILLER   PIC  X(020)  VALUE  " rk.knm_seq,        ".
+060222   03  FILLER   PIC  X(020)  VALUE  " rk.entry_kb,       ".
+130603   03  FILLER   PIC  X(022)  VALUE  " NVL(rk.lnk_date_kb,1)".
+         03  FILLER   PIC  X(023)  VALUE  " FROM sr_jlnktrn_rk rk ".
+091124   03  FILLER   PIC  X(027)  VALUE  " WHERE rk.srtbl_no < 91000".
+         03  FILLER   PIC  X(024)  VALUE  " AND ((rk.syori_flg = 0 ".
+091124   03  PAST-JK-PAR           PIC X(280).
+090701   03  FUTURE-JK-PAR         PIC X(240).
+         03  FILLER   PIC  X(025)  VALUE  " ) OR (rk.syori_flg = 1))".
+060524   03  FILLER   PIC  X(024)  VALUE  " AND rk.restore_flg = 0 ".
+100331   03  FILLER   PIC  X(020)  VALUE  " AND EXISTS(        ".
+100331   03  FILLER   PIC  X(020)  VALUE  " SELECT 1 FROM      ".
+100331   03  FILLER   PIC  X(020)  VALUE  " sr_jlnk_syain js   ".
+100331   03  FILLER   PIC  X(020)  VALUE  " WHERE  rk.sya_id   ".
+100331   03  FILLER   PIC  X(020)  VALUE  "      = js.sya_id   ".
+100331   03  FILLER   PIC  X(020)  VALUE  " AND js.par_id =    ".
+100331   03  WK-PAR-ID             PIC  X(003).
+100331   03  FILLER   PIC  X(001)  VALUE  ")".
+130301   03  FILLER   PIC  X(024)  VALUE  " ORDER BY 1,6,7,hatdate,".
+130301   03  FILLER   PIC  X(023)  VALUE  "8,9,2,11,3,rk.prc_date ".
+      *--order by sya_id,lnk_date,status,hatdate,hr_no,hrrk_kb,
+      *           srtbl_no,knm_seq,srfld_id,prc_date
+      *
+100729 01  SYORI-UPD-SQL.
+         03  FILLER   PIC  X(020)  VALUE  "UPDATE              ".
+         03  FILLER   PIC  X(022)  VALUE  " sr_jlnktrn_rk rk SET ".
+         03  FILLER   PIC  X(020)  VALUE  " syori_flg = 9,     ".
+      *   03  FILLER   PIC  X(025)  VALUE  " act_lnk_date = sysdate, ".
+131204   03  FILLER   PIC  X(016)  VALUE  " act_lnk_date = ".
+131204   03  FILLER   PIC  X(016)  VALUE  " to_date(rtrim('".
+131204   03  ACT-LNK-TIME             PIC  X(025).
+131204   03  FILLER   PIC  X(004)  VALUE  "'), ".
+131204   03  FILLER   PIC  X(025)  VALUE  "'YYYY/MM/DD HH24:MI:SS'),".
+         03  FILLER   PIC  X(020)  VALUE  " prc_date = sysdate ".
+100729   03  FILLER   PIC  X(026)  VALUE  " WHERE rk.srtbl_no =".
+100729   03  SYORI-UPD-TBL-NO      PIC X(005).
+         03  FILLER   PIC  X(024)  VALUE  " AND ((rk.syori_flg = 0 ".
+090701   03  PAST-UPD-JK-PAR       PIC X(280).
+090701   03  FUTURE-UPD-JK-PAR     PIC X(240).
+         03  FILLER   PIC  X(025)  VALUE  " ) OR (rk.syori_flg = 1))".
+100729   03  SYORI-JK-PAR            PIC X(124).
+100725 01  PAR-JK-SQL.
+100331   03  FILLER   PIC  X(020)  VALUE  " AND EXISTS(        ".
+100331   03  FILLER   PIC  X(020)  VALUE  " SELECT 1 FROM      ".
+100331   03  FILLER   PIC  X(020)  VALUE  " sr_jlnk_syain js   ".
+100331   03  FILLER   PIC  X(020)  VALUE  " WHERE  rk.sya_id   ".
+100331   03  FILLER   PIC  X(020)  VALUE  "      = js.sya_id   ".
+100331   03  FILLER   PIC  X(020)  VALUE  " AND js.par_id =    ".
+100331   03  WK-PAR-ID2            PIC  X(003).
+100331   03  FILLER   PIC  X(001)  VALUE  ")".
+      *----280
+       01  PAST-JK-SQL.
+         03  FILLER   PIC  X(020)  VALUE  " AND ((EXISTS(      ".
+         03  FILLER   PIC  X(020)  VALUE  " SELECT 1 FROM      ".
+090701   03  FILLER   PIC  X(011)  VALUE  " sr_hrinfo ".
+         03  FILLER   PIC  X(020)  VALUE  " WHERE  rk.sya_id   ".
+         03  FILLER   PIC  X(020)  VALUE  "  = sya_id          ".
+         03  FILLER   PIC  X(022)  VALUE  " AND rk.hr_no = hr_no ".
+070308   03  FILLER   PIC  X(026)  VALUE  " AND rk.hrrk_kb = hrrk_kb ".
+         03  FILLER   PIC  X(020)  VALUE  " AND hatdate >=     ".
+090501   03  FILLER   PIC  X(020)  VALUE  "  (  to_date(rtrim('".
+090501   03  COMPARE-PAST-TIME             PIC  X(025).
+090501   03  FILLER   PIC  X(004)  VALUE  "'), ".
+090501   03  FILLER   PIC  X(027)  VALUE  "'YYYY/MM/DD HH24:MI:SS') - ".
+         03  JK-PAST-SUSPEND-DAYS   PIC X(003).
+060524   03  FILLER   PIC  X(007)  VALUE  "))) or ".
+091124   03  FILLER   PIC  X(019)  VALUE  "(rk.trn_kb >=2 AND ".
+091124   03  FILLER   PIC  X(016)  VALUE  " rk.trn_kb <=6))".
+      *----240
+       01  FUTURE-JK-SQL.
+         03  FILLER   PIC  X(020)  VALUE  " AND EXISTS(        ".
+         03  FILLER   PIC  X(020)  VALUE  " SELECT 1 FROM      ".
+090701   03  FILLER   PIC  X(011)  VALUE  " sr_hrinfo ".
+         03  FILLER   PIC  X(020)  VALUE  " WHERE  rk.sya_id   ".
+         03  FILLER   PIC  X(020)  VALUE  "  = sya_id          ".
+         03  FILLER   PIC  X(022)  VALUE  " AND rk.hr_no = hr_no ".
+070308   03  FILLER   PIC  X(026)  VALUE  " AND rk.hrrk_kb = hrrk_kb ".
+         03  FILLER   PIC  X(020)  VALUE  " AND hatdate <=     ".
+090501   03  FILLER   PIC  X(020)  VALUE  "  (  to_date(rtrim('".
+090501   03  COMPARE-FUTURE-TIME           PIC  X(025).
+090501   03  FILLER   PIC  X(004)  VALUE  "'), ".
+090501   03  FILLER   PIC  X(027)  VALUE  "'YYYY/MM/DD HH24:MI:SS') + ".
+         03  JK-FUTURE-SUSPEND-DAYS PIC X(003).
+         03  FILLER   PIC  X(002)  VALUE  "))".
+      *
+100729 01  RESTORE-UPD-SQL.
+100729   03  FILLER   PIC  X(020)  VALUE  "UPDATE              ".
+100729   03  FILLER   PIC  X(022)  VALUE  " sr_jlnktrn_rk rk SET ".
+100729   03  FILLER   PIC  X(020)  VALUE  " restore_flg = -1,  ".
+100729   03  FILLER   PIC  X(020)  VALUE  " prc_date = sysdate ".
+100729   03  FILLER   PIC  X(020)  VALUE  " WHERE rk.srtbl_no =".
+100729   03  RESTORE-UPD-TBL-NO    PIC X(005).
+100729   03  FILLER   PIC  X(022)  VALUE  " AND rk.syori_flg = 9 ".
+100729   03  FILLER   PIC  X(022)  VALUE  " AND rk.restore_flg=0 ".
+100729   03  FILLER   PIC  X(020)  VALUE  " AND EXISTS(        ".
+100729   03  FILLER   PIC  X(020)  VALUE  " SELECT 1 FROM      ".
+100729   03  FILLER   PIC  X(020)  VALUE  " sr_jlnkhr_no jh    ".
+100729   03  FILLER   PIC  X(020)  VALUE  " WHERE  jh.sya_id   ".
+100729   03  FILLER   PIC  X(020)  VALUE  "      = rk.sya_id   ".
+100729   03  FILLER   PIC  X(020)  VALUE  " AND    jh.hr_no    ".
+100729   03  FILLER   PIC  X(020)  VALUE  "      = rk.hr_no    ".
+100729   03  FILLER   PIC  X(020)  VALUE  " AND    jh.hrrk_kb  ".
+100729   03  FILLER   PIC  X(020)  VALUE  "      = rk.hrrk_kb  ".
+100729   03  FILLER   PIC  X(020)  VALUE  " AND jh.status = 3) ".
+100729   03  FILLER   PIC  X(020)  VALUE  " AND EXISTS(        ".
+100729   03  FILLER   PIC  X(020)  VALUE  " SELECT 1 FROM      ".
+100729   03  FILLER   PIC  X(020)  VALUE  " sr_jlnktrn_rk rk2  ".
+100729   03  FILLER   PIC  X(020)  VALUE  " WHERE  rk2.srtbl_no".
+100729   03  FILLER   PIC  X(020)  VALUE  "      = rk.srtbl_no ".
+100729   03  FILLER   PIC  X(020)  VALUE  " AND rk2.syori_flg=1".
+100729   03  FILLER   PIC  X(020)  VALUE  " AND rk2.trn_kb = 9 ".
+100729   03  FILLER   PIC  X(020)  VALUE  " AND    rk2.sya_id  ".
+100729   03  FILLER   PIC  X(020)  VALUE  "      = rk.sya_id   ".
+100729   03  FILLER   PIC  X(020)  VALUE  " AND    rk2.hr_no   ".
+100729   03  FILLER   PIC  X(020)  VALUE  "      = rk.hr_no    ".
+111016   03  FILLER   PIC  X(020)  VALUE  " AND    rk2.status  ".
+111016   03  FILLER   PIC  X(020)  VALUE  "      = rk.status)  ".
+100729   03  RESTORE-JK-PAR        PIC X(124).
+      *
+      *---------------------------------------------------------------
+      *  ???????
+      *---------------------------------------------------------------
+      *
+100331 01  PRS-TIME.
+100331     03  SLP-TIME            PIC  X(05) VALUE "20".
+100331     03  FILLER              PIC  X(01) VALUE X"00".
+      *
+       COPY "sub007wk.cpy" REPLACING ==(#1)== BY S7.
+      *
+      ****************************************************************
+      ***                                                          ***
+      ***        PROCEDURE  DIVISION              ***
+      ***                                                          ***
+      ****************************************************************
+       PROCEDURE DIVISION.
+      *
+       CNTL SECTION.
+      *
+       
+                       IF  SRM-STATUS(SRM-IDX) =  0 THEN
+                           PERFORM  SRMST-INS
+080304                     MOVE  1  TO  KNM-IDX
+080304                     PERFORM  UNTIL KNM-IDX > CNT-SRKNM(SRM-IDX)
+                              PERFORM  SRKNM-INS
+080304                        ADD 1 TO KNM-IDX
+080304                     END-PERFORM
+                       ELSE
+                           IF IS-STS0-FLG = 0 THEN
+                              PERFORM  SRMST-INS
+                              MOVE  1  TO  IS-STS0-FLG
+                           END-IF
+080304                     MOVE  1  TO  KNM-IDX
+080304                     PERFORM  UNTIL KNM-IDX > CNT-SRKNM(SRM-IDX)
+080108                       IF (SRK-IS-STS0-FLG(SRM-IDX,KNM-IDX) = 1)
+080108                          PERFORM  SRKNM-INS
+080108                       MOVE 0 TO SRK-IS-STS0-FLG(SRM-IDX,KNM-IDX)
+080108                       END-IF
+080304                       ADD 1 TO KNM-IDX
+080304                     END-PERFORM
+                       END-IF
+                   END-IF
+               ELSE
+                   IF  (SRM-SDATE(SRM-IDX)  =  LNK-DATE) THEN
+                       IF  WK-STATUS = 1 THEN
+                         IF  SRM-STATUS(SRM-IDX) =  0 THEN
+                           IF  (SRM-IDX >= CNT-SRMST)
+                           OR  (SRM-SDATE(SRM-IDX + 1) > LNK-DATE) THEN
+                               PERFORM  SRMST-INS
+080304                         MOVE  1  TO  KNM-IDX
+080304                         PERFORM  UNTIL KNM-IDX
+080304                                             > CNT-SRKNM(SRM-IDX)
+                                  PERFORM  SRKNM-INS
+080304                            ADD 1 TO KNM-IDX
+080304                         END-PERFORM
+                           END-IF
+                         ELSE
+                           MOVE SRM-STATUS(SRM-IDX)  TO  TGT-STATUS
+                           PERFORM  SRMST-UPD
+080304                     MOVE  1  TO  KNM-IDX
+080304                     PERFORM  UNTIL KNM-IDX > CNT-SRKNM(SRM-IDX)
+                             PERFORM  SRKNM-UPD
+080304                       ADD 1 TO KNM-IDX
+080304                    END-PERFORM
+                         END-IF
+                       ELSE
+                         IF  SRM-STATUS(SRM-IDX) =  0 THEN
+                           MOVE SRM-STATUS(SRM-IDX)  TO  TGT-STATUS
+                           PERFORM  SRMST-UPD
+080304                     MOVE  1  TO  KNM-IDX
+080304                     PERFORM  UNTIL KNM-IDX > CNT-SRKNM(SRM-IDX)
+                             PERFORM  SRKNM-UPD
+080304                       ADD 1 TO KNM-IDX
+080304                    END-PERFORM
+                         ELSE
+                           IF IS-STS0-FLG = 0 THEN
+                              PERFORM  SRMST-INS
+                              MOVE  1  TO  IS-STS0-FLG
+                           END-IF
+080304                     MOVE  1  TO  KNM-IDX
+080304                     PERFORM  UNTIL KNM-IDX > CNT-SRKNM(SRM-IDX)
+080108                       IF (SRK-IS-STS0-FLG(SRM-IDX,KNM-IDX) = 1)
+080108                          PERFORM  SRKNM-INS
+080108                       MOVE 0 TO SRK-IS-STS0-FLG(SRM-IDX,KNM-IDX)
+080108                       END-IF
+080304                       ADD 1 TO KNM-IDX
+080304                     END-PERFORM
+                           MOVE SRM-STATUS(SRM-IDX)  TO  TGT-STATUS
+                           PERFORM  SRMST-UPD
+080304                     MOVE  1  TO  KNM-IDX
+080304                     PERFORM  UNTIL KNM-IDX > CNT-SRKNM(SRM-IDX)
+                             PERFORM  SRKNM-UPD
+080304                       ADD 1 TO KNM-IDX
+080304                    END-PERFORM
+                         END-IF
+                       END-IF
+                   ELSE
+      *----------------????SDATE?????????????????
+                       IF  (SRM-SDATE(SRM-IDX)  >  LNK-DATE) THEN
+                           MOVE SRM-STATUS(SRM-IDX)  TO  TGT-STATUS
+                           PERFORM  SRMST-UPD
+080304                     MOVE  1  TO  KNM-IDX
+080304                     PERFORM  UNTIL KNM-IDX > CNT-SRKNM(SRM-IDX)
+                             PERFORM  SRKNM-UPD
+080304                       ADD 1 TO KNM-IDX
+080304                    END-PERFORM
+                       END-IF
+                   END-IF
+060524         END-IF
+060524       END-IF
+      *
+             ADD   1  TO  SRM-IDX
+           END-PERFORM.
+           STOP        RUN.
+      *
